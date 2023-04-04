@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import SingleField from "./SingleField";
 import { motion } from "framer-motion";
+import PlayVersus from "../Layout/Buttons/PlayVersus";
+import ContinueEndGame from "../Layout/Buttons/ContinueEndGame";
+import Menu from "../Layout/Buttons/Menu";
+import Accept from "../Layout/Buttons/Accept";
 type BoardProps = {};
 
 type BoardFieldProps = {
@@ -51,13 +55,13 @@ const Board: React.FC<BoardProps> = () => {
         }))
       )
     );
-    console.log(preparedBoard);
+    // console.log(preparedBoard);
   }, []);
 
   useEffect(() => {
     checkRows();
     checkColumns();
-    // checkDiagonals();
+    checkDiagonals();
   }, [preparedBoard]);
   const resetField = () => {
     setPreparedBoard((item) =>
@@ -91,7 +95,9 @@ const Board: React.FC<BoardProps> = () => {
   }, [winner]);
 
   const checkWinner = (arrayToCheck: BoardFieldProps[]) => {
-    if (arrayToCheck.length === 7) {
+    // console.log(arrayToCheck);
+
+    if (arrayToCheck.length) {
       let whitePlayerScore = 0;
       let redPlayerScore = 0;
       let whiteWinnerArray: string[] = [];
@@ -101,15 +107,6 @@ const Board: React.FC<BoardProps> = () => {
         if (field.playerUsed === "white") {
           whitePlayerScore++;
           whiteWinnerArray.push(field.id);
-
-          // setWinnerFieldId((prev: BoardFieldProps[]) => {
-          //   return prev.find((item) => item.id === field.id)
-          //     ? prev
-          //     : [...prev, field];
-          // });
-          // setWinnerFieldId((prev: BoardFieldProps[]) =>
-          //   prev.sort((a, b) => (a.column > b.column ? 1 : -1))
-          // );
 
           if (whitePlayerScore >= 4) {
             setWinner("white");
@@ -121,18 +118,41 @@ const Board: React.FC<BoardProps> = () => {
           whitePlayerScore = 0;
           whiteWinnerArray = [];
         }
+      });
+      //   if (field.playerUsed === "white") {
+      //     whitePlayerScore++;
+      //     whiteWinnerArray.push(field.id);
 
+      //     if (whitePlayerScore >= 4) {
+      //       setWinner("white");
+      //       setWinnerFieldId(whiteWinnerArray);
+      //     }
+
+      //     return;
+      //   } else if (field.playerUsed === "red") {
+      //     redPlayerScore++;
+      //     redWinnerArray.push(field.id);
+      //   } else {
+      //     whitePlayerScore = 0;
+      //     whiteWinnerArray = [];
+      //     redPlayerScore = 0;
+      //     redWinnerArray = [];
+      //   }
+      // });
+      arrayToCheck.map((field: BoardFieldProps) => {
         if (field.playerUsed === "red") {
           redPlayerScore++;
           redWinnerArray.push(field.id);
-          if (redPlayerScore === 4) {
-            setWinnerFieldId(redWinnerArray);
+
+          if (redPlayerScore >= 4) {
             setWinner("red");
+            setWinnerFieldId(redWinnerArray);
           }
+
           return;
         } else {
           redPlayerScore = 0;
-          redWinnerArray;
+          redWinnerArray = [];
         }
       });
     }
@@ -141,11 +161,11 @@ const Board: React.FC<BoardProps> = () => {
   const checkColumns = () => {
     const columnIndex = [0, 1, 2, 3, 4, 5, 6];
     columnIndex.map((columnId) => {
-      const columnFieldArray: BoardFieldProps[] = [];
+      const diagonalFieldArray: BoardFieldProps[] = [];
       preparedBoard.filter((item) => {
         return item.filter((field: BoardFieldProps) => {
-          if (field.column === columnId) columnFieldArray.push(field);
-          checkWinner(columnFieldArray);
+          if (field.column === columnId) diagonalFieldArray.push(field);
+          checkWinner(diagonalFieldArray);
         });
       });
     });
@@ -157,99 +177,42 @@ const Board: React.FC<BoardProps> = () => {
   };
 
   const checkDiagonals = () => {
-    const diagonalArrayEnd: BoardFieldProps[] = [];
-    const diagonalArray: BoardFieldProps[] = [];
+    const rowCounter = [-4, -3, -2, -1, 0, 1, 2, 3];
 
-    // const rowStartIndex = [0, 0, 0, 0, 1, 2, 3];
-    // const colStartIndex = [0, 1, 2, 3, 0, 0, 0];
-    // rowStartIndex.map((rowIndex, index) => {
-    //   let startRow = rowStartIndex[index];
-    //   let startCol = colStartIndex[index];
-    //   preparedBoard.filter((item, id: number) => {
-    //     item.filter((field: BoardFieldProps, col: number) => {
-    //       if (
-    //         startRow + index <= preparedBoard.length &&
-    //         startCol + index <= preparedBoard.length
-    //       ) {
-    //         // console.log(
-    //         //   field.row,
-    //         //   "start Row",
-    //         //   startRow + index,
-    //         //   "||",
-    //         //   field.column,
-    //         //   "start Col",
-    //         //   startCol + index
-    //         // );
-    //         if (
-    //           field.row === startRow + index &&
-    //           field.column === startRow + index
-    //         )
-    //           diagonalArrayTestowa.push(field);
-    //       }
-    //       checkWinner(diagonalArrayTestowa);
-    //       console.log(diagonalArrayTestowa);
-    //     });
-    //   });
-    // });
-    // preparedBoard.filter((item, id: number) =>
-    //   item.filter((field: BoardFieldProps, col: number) => {
-    //     let startRow = rowStartIndex[id];
-    //     let startCol = colStartIndex[id];
-    //     if (field.row === field.column) diagonalArray.push(field);
-    //     if (
-    //       startRow + col <= preparedBoard.length &&
-    //       startCol + col <= preparedBoard.length
-    //     ) {
-    //       // console.log(
-    //       //   field.row,
-    //       //   "start Row",
-    //       //   startRow + col,
-    //       //   "||",
-    //       //   field.column,
-    //       //   "start Col",
-    //       //   startCol + col
-    //       // );
+    rowCounter.map((columnId) => {
+      const diagonalFieldArray: BoardFieldProps[] = [];
+      const diagonalFieldArrayOne: BoardFieldProps[] = [];
+      const diagonalFieldArrayTwo: BoardFieldProps[] = [];
+      preparedBoard.filter((item, row: number) => {
+        return item.filter((field: BoardFieldProps, col: number) => {
+          if (field.row === row && field.column === row + columnId)
+            diagonalFieldArray.push(field);
+          checkWinner(diagonalFieldArray);
+          if (field.row === col + columnId && field.column === col) {
+            diagonalFieldArrayOne.push(field);
+            checkWinner(diagonalFieldArrayOne);
+          }
 
-    //       if (field.row === startCol + col && field.column === startRow + col)
-    //         diagonalArrayTestowa.push(field);
-    //     }
-
-    //     // console.log(id, "row", col, "col");
-
-    //     if (field.row === id && field.column === preparedBoard.length - id - 1)
-    //       diagonalArrayEnd.push(field);
-    //     checkWinner(diagonalArray);
-    //     checkWinner(diagonalArrayEnd);
-    //     checkWinner(diagonalArrayTestowa);
-    //     // console.log(diagonalArrayTestowa, "diag");
-    //   })
-    // );
-    const rowStartIndex = [0, 0, 0, 0, 1, 2, 3];
-    const colStartIndex = [0, 1, 2, 3, 0, 0, 0];
-    const licznkik = [0, 1, 2, 3, 4, 5, 6];
-    const diagonalArrayTestowa: BoardFieldProps[] = [];
-    preparedBoard.filter((item, row: number) => {
-      let startRow = rowStartIndex[row];
-      console.log(startRow + row);
-
-      item.filter((field: BoardFieldProps, col: number) => {
-        let startCol = colStartIndex[col];
-        // console.log(row, "row", col, "col", field.name);
-        if (field.row === startRow + row && field.column === startCol) {
-          diagonalArrayTestowa.push(field.id);
-        }
+          if (
+            field.row === row &&
+            field.column === preparedBoard.length - row + columnId
+          ) {
+            diagonalFieldArrayTwo.push(field);
+            checkWinner(diagonalFieldArrayTwo);
+          }
+        });
       });
     });
     // console.log(diagonalArrayTestowa, "diag");
-    setPreparedBoard((prev) =>
-      prev.map((item) =>
-        item.map((field: BoardFieldProps) => {
-          return diagonalArrayTestowa.includes(field.id)
-            ? { ...field, isWinner: true }
-            : field;
-        })
-      )
-    );
+    // setPreparedBoard((prev) =>
+    //   prev.map((item) =>
+    //     item.map((field: BoardFieldProps) => {
+    //       return diagonalArrayTestowa.includes(field.id)
+    //         ? { ...field, isWinner: true }
+    //         : field;
+    //     })
+    //   )
+    // );
   };
 
   const clickField = (
@@ -260,42 +223,42 @@ const Board: React.FC<BoardProps> = () => {
   ) => {
     if (isClicked) return;
 
-    const columnFieldArray: BoardFieldProps[] = [];
+    const diagonalFieldArray: BoardFieldProps[] = [];
     preparedBoard.filter((item) => {
       return item.filter((field: BoardFieldProps) => {
-        if (field.column === fieldCol) columnFieldArray.push(field);
+        if (field.column === fieldCol) diagonalFieldArray.push(field);
       });
     });
 
-    // const lastEmptyIndexColumn = columnFieldArray.findLastIndex(
-    //   (item: BoardFieldProps) => {
-    //     return item.isClicked === false;
-    //   }
-    // );
-    // const lastEmptyId = columnFieldArray[lastEmptyIndexColumn].id;
-    // setPreparedBoard((item) =>
-    //   item.map((row) =>
-    //     row.map((col: BoardFieldProps) => {
-    //       return col.id === lastEmptyId
-    //         ? { ...col, isClicked: true, playerUsed: currentPlayerTurn }
-    //         : col;
-    //     })
-    //   )
-    // );
-
+    const lastEmptyIndexColumn = diagonalFieldArray.findLastIndex(
+      (item: BoardFieldProps) => {
+        return item.isClicked === false;
+      }
+    );
+    const lastEmptyId = diagonalFieldArray[lastEmptyIndexColumn].id;
     setPreparedBoard((item) =>
       item.map((row) =>
         row.map((col: BoardFieldProps) => {
-          return col.id === id
+          return col.id === lastEmptyId
             ? { ...col, isClicked: true, playerUsed: currentPlayerTurn }
             : col;
         })
       )
     );
+
+    // setPreparedBoard((item) =>
+    //   item.map((row) =>
+    //     row.map((col: BoardFieldProps) => {
+    //       return col.id === id
+    //         ? { ...col, isClicked: true, playerUsed: currentPlayerTurn }
+    //         : col;
+    //     })
+    //   )
+    // );
     // console.log(fieldRow, fieldCol);
 
     // checkRows();
-    // swichtPlayerTurn();
+    swichtPlayerTurn();
   };
   const printBoard = preparedBoard.map((row, rowId) =>
     row.map((col: BoardFieldProps, colId: number) => {
@@ -317,6 +280,12 @@ const Board: React.FC<BoardProps> = () => {
 
   return (
     <div>
+      <PlayVersus type="vsPlayer" />
+      <PlayVersus type="vsCPU" />
+      <ContinueEndGame type="ContinueGame" />
+      <ContinueEndGame type="QuitGame" />
+      <Accept />
+      <Menu />
       <motion.div
         animate={{ x: 30, y: yOdleglosc }}
         transition={{ type: "spring", stiffness: 100, duration: 1 }}
