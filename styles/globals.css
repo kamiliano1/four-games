@@ -5,5 +5,14 @@
 @layer base {
   html {
     font-family: "Space Grotesk", sans-serif;
+    @apply bg-darkPurple;
   }
+}
+
+p {
+  @apply text-500 opacity-[0.66];
+}
+
+.menu {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 }

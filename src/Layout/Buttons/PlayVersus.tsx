@@ -15,7 +15,10 @@ const PlayVersus: React.FC<PlayVersusProps> = ({ type }) => {
   return (
     <>
       <button
-        className={` my-4 uppercase flex items-center rounded-[20px] p-5 font-bold w-[300px] justify-between ${buttonBackground} ${textColor} border-[3px] border-black hover:border-darkPurple 
+        className={` text-700 mb-7 
+        px-3 uppercase flex items-center rounded-[20px] 
+        py-[10.34px] font-bold justify-between ${buttonBackground} ${textColor} 
+        border-[3px] border-black hover:border-darkPurple 
         shadow-normalBig hover:shadow-hoverBig`}
       >
         {text}

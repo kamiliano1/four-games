@@ -284,7 +284,7 @@ const Board: React.FC<BoardProps> = () => {
       <PlayVersus type="vsCPU" />
       <ContinueEndGame type="ContinueGame" />
       <ContinueEndGame type="QuitGame" />
-      <Accept />
+
       <Menu />
       <motion.div
         animate={{ x: 30, y: yOdleglosc }}
