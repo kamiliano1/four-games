@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import SingleField from "./SingleField";
 import { motion } from "framer-motion";
-import PlayVersus from "../Layout/Buttons/PlayVersus";
-import ContinueEndGame from "../Layout/Buttons/ContinueEndGame";
-import Menu from "../Layout/Buttons/Menu";
-import Accept from "../Layout/Buttons/Accept";
+// import PlayVersus from "../Layout/Buttons/PlayVersus";
+// import ContinueEndGame from "../Layout/Buttons/ContinueEndGame";
+import MenuButton from "../Layout/Buttons/MenuButton";
+import AcceptButton from "../Layout/Buttons/AcceptButton";
 type BoardProps = {};
 
 type BoardFieldProps = {
@@ -280,53 +280,46 @@ const Board: React.FC<BoardProps> = () => {
 
   return (
     <div>
-      <PlayVersus type="vsPlayer" />
+      {/* <PlayVersus type="vsPlayer" />
       <PlayVersus type="vsCPU" />
       <ContinueEndGame type="ContinueGame" />
-      <ContinueEndGame type="QuitGame" />
+      <ContinueEndGame type="QuitGame" /> */}
 
-      <Menu />
+      {/* <Menu /> */}
       <motion.div
         animate={{ x: 30, y: yOdleglosc }}
-        transition={{ type: "spring", stiffness: 100, duration: 1 }}
-      >
+        transition={{ type: "spring", stiffness: 100, duration: 1 }}>
         <h1 className="text-4xl text-red-500">Test</h1>
       </motion.div>
       {printBoard}
       <button
         style={{ margin: "2rem", background: "teal" }}
-        onClick={checkRows}
-      >
+        onClick={checkRows}>
         Sprawdz wiersze
       </button>
       <button
         style={{ margin: "2rem", background: "teal" }}
-        onClick={checkColumns}
-      >
+        onClick={checkColumns}>
         Sprawdz kolumny
       </button>
       <button
         style={{ margin: "2rem", background: "teal" }}
-        onClick={checkDiagonals}
-      >
+        onClick={checkDiagonals}>
         Sprawdz przekatne
       </button>
       <button
         style={{ margin: "2rem", background: "teal" }}
-        onClick={resetField}
-      >
+        onClick={resetField}>
         Reset
       </button>
       <button
         style={{ margin: "2rem", background: "teal" }}
-        onClick={swichtPlayerTurn}
-      >
+        onClick={swichtPlayerTurn}>
         Zmiana gracza
       </button>
       <button
         style={{ margin: "2rem", background: "teal" }}
-        onClick={() => setYOdleglosc((prev) => prev + 30)}
-      >
+        onClick={() => setYOdleglosc((prev) => prev + 30)}>
         Zwieksz yOdleglosc
       </button>
     </div>

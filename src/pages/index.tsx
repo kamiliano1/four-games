@@ -6,6 +6,7 @@ import RulesModal from "../components/Modal/RulesModal";
 import PauseModal from "../components/Modal/PauseModal";
 import { authModalState } from "../atoms/modalAtom";
 import { useRecoilState } from "recoil";
+import Game from "../components/Game/Game";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -29,19 +30,20 @@ export default function Home() {
         />
       </Head>
       <main className="">
-        <button onClick={updateState}>aaaaaaaa</button>
-        {modalState.open && (
+        {/* <button onClick={updateState}>aaaaaaaa</button> */}
+        {/* {modalState.open && (
           <>
             {modalState.view === "start" && <StartModal />}
             {modalState.view === "pause" && <PauseModal />}
             {modalState.view === "rules" && <RulesModal />}
           </>
-        )}
-        <Board />
+        )} */}
+        {/* <Board /> */}
         {/* <StartModal /> */}
         {/* <RulesModal /> */}
 
         {/* <Board /> */}
+        <Game />
       </main>
     </>
   );

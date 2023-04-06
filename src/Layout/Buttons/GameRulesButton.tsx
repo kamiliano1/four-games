@@ -2,9 +2,9 @@ import React from "react";
 import { authModalState } from "../../atoms/modalAtom";
 import { useRecoilState } from "recoil";
 
-type GameRulesProps = {};
+type GameRulesButtonProps = {};
 
-const GameRules: React.FC<GameRulesProps> = () => {
+const GameRulesButton: React.FC<GameRulesButtonProps> = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
   return (
     <button
@@ -12,10 +12,9 @@ const GameRules: React.FC<GameRulesProps> = () => {
       className={`uppercase rounded-[20px] text-700
       mb-7 px-3 font-bold text-start py-[1.3335rem]
       } border-[3px] bg-white text-black 
-       border-black hover:border-darkPurple shadow-normalBig hover:shadow-hoverBig`}
-    >
+       border-black hover:border-darkPurple shadow-normalBig hover:shadow-hoverBig`}>
       Game Rules
     </button>
   );
 };
-export default GameRules;
+export default GameRulesButton;

@@ -1,4 +1,4 @@
-import Accept from "@/src/Layout/Buttons/Accept";
+import AcceptButton from "@/src/Layout/Buttons/AcceptButton";
 import React from "react";
 type RulesModalProps = {};
 
@@ -9,8 +9,7 @@ const RulesModal: React.FC<RulesModalProps> = () => {
         className="relative mx-5 bg-white flex flex-col justify-center  
         px-5 sm:px-10 pt-[1.875rem] pb-[3.8125rem] sm:pb-[3.1875rem] 
        m-auto shadow-normalBig rounded-[40px] 
-       sm:h-auto border-[3px] border-black w-[480px]"
-      >
+       sm:h-auto border-[3px] border-black w-[480px]">
         <h1 className="uppercase text-center text-900 font-bold mb-[1.8125rem]">
           Rules
         </h1>
@@ -43,7 +42,7 @@ const RulesModal: React.FC<RulesModalProps> = () => {
           <span className="mr-[1.1875rem] font-bold">4</span>{" "}
           <p>The starter of the previous game goes second on the next game. </p>
         </div>
-        <Accept />
+        <AcceptButton />
       </div>
     </div>
   );
