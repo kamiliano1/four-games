@@ -32,6 +32,9 @@ module.exports = {
         normalSmall: "0px 5px 0px #000000",
         hoverSmall: "0px 5px 0px #5C2DD5",
       },
+      screens: {
+        sm: "768px",
+      },
     },
   },
   plugins: [],
