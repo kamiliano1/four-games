@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../../public/images/logo.svg";
 import MenuButton from "@/src/Layout/Buttons/MenuButton";
-import RestartButton from "@/src/Layout/Buttons/RestartButton";
+import RestartButton from "@/src/Layout/Buttons/RestartButtonSmall";
 import Image, { StaticImageData } from "next/image";
 import PlayerScore from "./PlayerScore";
 import frontBoardLayerSmall from "../../../public/images/board-layer-white-small.svg";
@@ -49,30 +49,34 @@ const Game: React.FC<GameProps> = () => {
   }, [windowWidth]);
   return (
     <div className="h-full ">
-      <div className="bg-darkPurple absolute w-full h-[236px] bottom-0 rounded-t-[60px] rounder-r-[60px] -z-40"></div>
+      <div
+        className="bg-darkPurple absolute w-full h-[236px] bottom-0 
+      rounded-t-[60px] rounder-r-[60px] -z-40"
+      ></div>
       <div className="px-5 sm:px-[0] py-14">
-        <div className="sm:w-[632px] mx-auto ">
-          <div className="flex items-center justify-between ">
+        <div className="w-[335px] sm:w-[632px] lg:w-[1010px] mx-auto ">
+          <div className="flex items-center justify-between sm:w-[632px] sm:mx-auto">
             <MenuButton />
             <Image src={logo} alt="web logo" />
             <RestartButton />
           </div>
-          <div className="flex justify-between">
+          <div className="grid grid-rows-[81px, auto] grid-cols-2 lg:grid-rows-[584px] lg:grid-cols-[auto,auto,auto] lg:gap-12 place-items-center">
             <PlayerScore name="Player 1" playerId={1} score={12} />
             <PlayerScore name="Player 2" playerId={2} score={23} />
+
+            <div className="relative flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1">
+              <Image
+                src={currentImage.front}
+                alt="game board"
+                className=" z-[-4]"
+              />
+              <Image
+                src={currentImage.back}
+                alt="game board"
+                className="absolute z-[-5]"
+              />
+            </div>
           </div>
-        </div>
-        <div className="relative flex justify-center ">
-          <Image
-            src={currentImage.front}
-            alt="game board"
-            className=" z-[-4]"
-          />
-          <Image
-            src={currentImage.back}
-            alt="game board"
-            className="absolute z-[-5]"
-          />
         </div>
         <PlayerRedTurnBox />
         {/* <PlayerYellowTurnBox /> */}

@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
 import Board from "../components/Board";
 import StartModal from "../components/Modal/StartModal";
 import RulesModal from "../components/Modal/RulesModal";
@@ -7,15 +6,10 @@ import PauseModal from "../components/Modal/PauseModal";
 import { authModalState } from "../atoms/modalAtom";
 import { useRecoilState } from "recoil";
 import Game from "../components/Game/Game";
-const inter = Inter({ subsets: ["latin"] });
-
 export default function Home() {
   const [modalState, setModalState] = useRecoilState(authModalState);
   console.log(modalState, "state");
-  const updateState = () => {
-    setModalState((prev) => ({ ...prev, open: false }));
-    console.log(modalState, "po");
-  };
+
   return (
     <>
       <Head>
@@ -30,7 +24,6 @@ export default function Home() {
         />
       </Head>
       <main className="">
-        {/* <button onClick={updateState}>aaaaaaaa</button> */}
         {modalState.open && (
           <>
             {modalState.view === "start" && <StartModal />}
@@ -38,13 +31,12 @@ export default function Home() {
             {modalState.view === "rules" && <RulesModal />}
           </>
         )}
+
         {/* <Board /> */}
         {/* <StartModal /> */}
         {/* <RulesModal /> */}
-
+        <Game />
         {/* <Board /> */}
-        {!modalState.open && <Game />}
-        {/* <Game /> */}
       </main>
     </>
   );

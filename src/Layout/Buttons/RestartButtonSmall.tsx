@@ -1,12 +1,12 @@
 import React from "react";
 
-type RestartButtonProps = {};
+type RestartButtonSmallProps = {};
 
-const RestartButton: React.FC<RestartButtonProps> = () => {
+const RestartButtonSmall: React.FC<RestartButtonSmallProps> = () => {
   return (
     <button className="uppercase py-[.625rem] w-[108px] bg-darkPurple hover:bg-red text-500 text-white font-bold rounded-[20px]">
       Restart
     </button>
   );
 };
-export default RestartButton;
+export default RestartButtonSmall;

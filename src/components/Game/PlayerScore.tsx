@@ -14,15 +14,20 @@ const PlayerScore: React.FC<PlayerScoreProps> = ({ name, score, playerId }) => {
   return (
     <div
       className={` ${
-        playerId === 1 ? "ml-[13px] sm:ml-[24px]" : "mr-[13px] sm:mr-[24px]"
-      } relative flex flex-col pl-[2.5rem] pr-[2rem] sm:w-[270px] sm:justify-between 
-      sm:py-3 sm:flex-row sm:items-center my-12 sm:my-8
+        playerId === 1
+          ? "ml-[13px] sm:ml-[24px] lg:col-start-1 lg:ml-0"
+          : "mr-[13px] sm:mr-[24px] lg:col-start-3 lg:mr-0"
+      } relative flex flex-col lg:p-0 lg:justify-center  sm:px-[2.5rem]
+  
+      w-[145px] sm:w-[270px] lg:w-[141px] 
+      sm:justify-between 
+      sm:py-3 lg:py-9 sm:flex-row lg:flex-col sm:items-center my-12 sm:my-8
     py-[.625rem] border-[3px] border-black text-center bg-white rounded-[20px] 
     font-bold shadow-normalBig`}
     >
       <h2
         className={`uppercase text-500 ${
-          playerId === 1 ? "order-[-2]" : "order-10"
+          playerId === 1 ? "sm:order-[-2]" : "sm:order-10"
         }`}
       >
         {name}
@@ -32,7 +37,9 @@ const PlayerScore: React.FC<PlayerScoreProps> = ({ name, score, playerId }) => {
         src={playerAvatar}
         alt=""
         className={`absolute ${
-          playerId === 1 ? "left-[-27px]" : "right-[-27px]"
+          playerId === 1
+            ? "left-[-27px]  lg:left-[calc(50%-27px)] lg:right-0 lg:top-[-27px]"
+            : "right-[-27px]  lg:left-[calc(50%-27px)] lg:right-0 lg:top-[-27px]"
         }`}
       />
     </div>

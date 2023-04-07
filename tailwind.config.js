@@ -10,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-space-Grotesk)"],
+      },
       colors: {
         black: "hsl(0, 0%, 0%)",
         darkPurple: "hsl(257, 67%, 51%)",

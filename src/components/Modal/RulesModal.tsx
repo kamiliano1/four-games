@@ -4,12 +4,13 @@ type RulesModalProps = {};
 
 const RulesModal: React.FC<RulesModalProps> = () => {
   return (
-    <div className="bg-purple w-full sm:bg-darkPurple h-[100vh] flex justify-center">
+    <div className="bg-purple w-full  h-[100vh] flex justify-center">
       <div
         className="relative mx-5 bg-white flex flex-col justify-center  
         px-5 sm:px-10 pt-[1.875rem] pb-[3.8125rem] sm:pb-[3.1875rem] 
        m-auto shadow-normalBig rounded-[40px] 
-       sm:h-auto border-[3px] border-black w-[480px]">
+       sm:h-auto border-[3px] border-black w-[480px]"
+      >
         <h1 className="uppercase text-center text-900 font-bold mb-[1.8125rem]">
           Rules
         </h1>
