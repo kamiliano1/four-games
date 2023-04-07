@@ -74,10 +74,10 @@ const Game: React.FC<GameProps> = () => {
             className="absolute z-[-5]"
           />
         </div>
-        {/* <PlayerRedTurnBox /> */}
+        <PlayerRedTurnBox />
         {/* <PlayerYellowTurnBox /> */}
 
-        <WinnerBox />
+        {/* <WinnerBox /> */}
       </div>
     </div>
   );

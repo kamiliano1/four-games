@@ -31,19 +31,20 @@ export default function Home() {
       </Head>
       <main className="">
         {/* <button onClick={updateState}>aaaaaaaa</button> */}
-        {/* {modalState.open && (
+        {modalState.open && (
           <>
             {modalState.view === "start" && <StartModal />}
             {modalState.view === "pause" && <PauseModal />}
             {modalState.view === "rules" && <RulesModal />}
           </>
-        )} */}
+        )}
         {/* <Board /> */}
         {/* <StartModal /> */}
         {/* <RulesModal /> */}
 
         {/* <Board /> */}
-        <Game />
+        {!modalState.open && <Game />}
+        {/* <Game /> */}
       </main>
     </>
   );
