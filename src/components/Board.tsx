@@ -2,10 +2,21 @@ import React, { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import SingleField from "./SingleField";
 import { motion } from "framer-motion";
+import Image, { StaticImageData } from "next/image";
 // import PlayVersus from "../Layout/Buttons/PlayVersus";
 // import ContinueEndGame from "../Layout/Buttons/ContinueEndGame";
 import MenuButton from "../Layout/Buttons/MenuButton";
 import AcceptButton from "../Layout/Buttons/AcceptButton";
+import markerRed from "../../public/images/marker-red.svg";
+import markerYellow from "../../public/images/marker-yellow.svg";
+import counterRedSmall from "../../public/images/counter-red-small.svg";
+import counterRedBig from "../../public/images/counter-red-big.svg";
+import counterYellowSmall from "../../public/images/counter-yellow-small.svg";
+import counterYellowBig from "../../public/images/counter-yellow-big.svg";
+import frontBoardLayerSmall from "../../public/images/board-layer-white-small.svg";
+import backBoardLayerSmall from "../../public/images/board-layer-black-small.svg";
+import frontBoardLayerLarge from "../../public/images/board-layer-white-large.svg";
+import backBoardLayerLarge from "../../public/images/board-layer-black-large.svg";
 type BoardProps = {};
 
 type BoardFieldProps = {
@@ -25,7 +36,7 @@ const Board: React.FC<BoardProps> = () => {
     useState<PlayerColor>("white");
 
   const [preparedBoard, setPreparedBoard] = useState(
-    new Array(7).fill(new Array(7).fill("") as BoardFieldProps[])
+    new Array(6).fill(new Array(7).fill("") as BoardFieldProps[])
   );
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,7 +48,37 @@ const Board: React.FC<BoardProps> = () => {
   const swichtPlayerTurn = () => {
     setCurrentPlayerTurn((prev) => (prev === "white" ? "red" : "white"));
   };
+  type picturesType = {
+    front: StaticImageData;
+    back: StaticImageData;
+  };
+  const [windowWidth, setWindowWidth] = useState<number>(0);
+  const [currentImage, setCurrentImage] = useState<picturesType>({
+    front: frontBoardLayerSmall,
+    back: backBoardLayerSmall,
+  });
+  useEffect(() => {
+    function handleWindowResize() {
+      setWindowWidth(window.innerWidth);
+    }
+    setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowResize);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
 
+  useEffect(() => {
+    windowWidth > 767
+      ? setCurrentImage({
+          front: frontBoardLayerLarge,
+          back: backBoardLayerLarge,
+        })
+      : setCurrentImage({
+          front: frontBoardLayerSmall,
+          back: backBoardLayerSmall,
+        });
+  }, [windowWidth]);
   // useEffect(() => {
   //   console.log(whitePlayerScore);
   // }, [whitePlayerScore]);
@@ -273,6 +314,7 @@ const Board: React.FC<BoardProps> = () => {
           playerUsed={col.playerUsed}
           isWinner={col.isWinner}
           field={() => clickField(col.id, col.isClicked, col.column, col.row)}
+          currentField={preparedBoard}
         />
       );
     })
@@ -291,7 +333,19 @@ const Board: React.FC<BoardProps> = () => {
         transition={{ type: "spring", stiffness: 100, duration: 1 }}>
         <h1 className="text-4xl text-red-500">Test</h1>
       </motion.div>
-      {printBoard}
+      <div className="relative flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1">
+        <Image
+          src={currentImage.front}
+          alt="game board"
+          className="absolute z-[-4]"
+        />
+        <Image
+          src={currentImage.back}
+          alt="game board"
+          className="absolute z-[-5]"
+        />
+        <div className="mt-2 w-[330px] ">{printBoard}</div>
+      </div>
       <button
         style={{ margin: "2rem", background: "teal" }}
         onClick={checkRows}>
