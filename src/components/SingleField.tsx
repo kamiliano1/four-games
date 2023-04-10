@@ -24,6 +24,7 @@ type SingleFieldProps = {
   isWinner: boolean;
   field: (id: string, isClicked: boolean, column: number) => void;
   currentField: BoardFieldProps[];
+  currentHoverColumn: (column: number) => void;
 };
 
 const SingleField: React.FC<SingleFieldProps> = ({
@@ -35,6 +36,7 @@ const SingleField: React.FC<SingleFieldProps> = ({
   isWinner,
   field,
   currentField,
+  currentHoverColumn,
 }) => {
   type picturesType = {
     bigRed: StaticImageData;
@@ -44,15 +46,16 @@ const SingleField: React.FC<SingleFieldProps> = ({
   };
   const [windowWidth, setWindowWidth] = useState<number>(0);
   const [currentImage, setCurrentImage] = useState<picturesType>({
-    // bigRed: counterRedBig,
-    bigRed: counterRedSmall,
+    bigRed: counterRedBig,
+    // bigRed: counterRedSmall,
     smallRed: counterRedSmall,
-    // bigYellow: counterYellowBig,
-    bigYellow: counterYellowSmall,
+    bigYellow: counterYellowBig,
+    // bigYellow: counterYellowSmall,
     smallYellow: counterYellowSmall,
   });
 
   const [images, setImages] = useState<StaticImageData>(currentImage.bigRed);
+  const [currentColumnHover, setCurrentColumnHover] = useState<number>(-1);
   useEffect(() => {
     function handleWindowResize() {
       setWindowWidth(window.innerWidth);
@@ -65,10 +68,13 @@ const SingleField: React.FC<SingleFieldProps> = ({
   }, []);
   let fieldBackground = "black";
   useEffect(() => {
-    if (windowWidth > 120) {
-      if (isWinner) {
-        fieldBackground = "pink";
-      } else if (playerUsed === "red") {
+    if (playerUsed === "red") {
+      setImages(currentImage.smallRed);
+    } else if (playerUsed === "white") {
+      setImages(currentImage.smallYellow);
+    }
+    if (windowWidth > 737) {
+      if (playerUsed === "red") {
         setImages(currentImage.bigRed);
         fieldBackground = "red";
       } else if (playerUsed === "white") {
@@ -81,13 +87,6 @@ const SingleField: React.FC<SingleFieldProps> = ({
 
       // return;
     }
-    // if (isWinner) {
-    //   fieldBackground = "pink";
-    // } else if (playerUsed === "red") {
-    //   setImages(currentImage.smallRed);
-    // } else if (playerUsed === "white") {
-    //   setImages(currentImage.smallYellow);
-    // }
   }, [windowWidth, currentField]);
 
   if (isWinner) {
@@ -97,19 +96,58 @@ const SingleField: React.FC<SingleFieldProps> = ({
   } else if (playerUsed === "white") {
     fieldBackground = "green";
   }
-  const styles: CSSProperties = {
-    backgroundColor: fieldBackground,
-  };
+  // const styles: CSSProperties = {
+  //   backgroundColor: fieldBackground,
+  //   border: "6px solid #FFFFFF",
+  //   position: "absolute",
+  //   borderRadius: "50%",
+  // };
 
   return (
     <>
-      <Image
-        className="cursor-pointer inline mr-[6px]"
-        src={images}
-        // style={styles}
-        alt=""
-        onClick={() => field(id, isClicked, column)}
-      />
+      {isClicked ? (
+        <div className="inline relative">
+          <Image
+            className="cursor-pointer inline mr-[6.14px] sm:mr-[18px] sm:mb-[12px] "
+            src={images}
+            // style={styles}
+            alt=""
+            // onClick={() => console.log(column)}
+            // onClick={() => field(id, isClicked, column)}
+          />
+          {isWinner && (
+            <span className="absolute top-0 left-[10.5px] flex border-[6px] border-white rounded-full aspect-square items-start w-[20px] sm:w-[34px] sm:left-[17px] sm:top-[-10px] "></span>
+          )}
+        </div>
+      ) : (
+        <div className="inline">
+          {windowWidth > 738 ? (
+            <span
+              className="w-[75px] aspect-square inline-block bg-slate-500 rounded-full mr-[12.5px] mb-[5px]"
+              onClick={() => field(id, isClicked, column)}
+            ></span>
+          ) : (
+            <span
+              className="w-[41px] h-[46px] inline-block bg-slate-500 rounded-full mr-[6.6px]"
+              onClick={() => field(id, isClicked, column)}
+            ></span>
+          )}
+          {/*  */}
+
+          {/* <Image
+            className="cursor-pointer inline opacity-20 mr-[6.14px] sm:mr-[18px] sm:mb-[12px]"
+            src={images}
+            // style={styles}
+            alt=""
+            // onMouseEnter={() => console.log(column)}
+            onClick={() => field(id, isClicked, column)}
+            onMouseEnter={() => currentHoverColumn(column)}
+            onMouseLeave={() => currentHoverColumn(-1)}
+            // onMouseEnter={() => setCurrentColumnHover(column)}
+            // onMouseLeave={() => setCurrentColumnHover(-1)}
+          /> */}
+        </div>
+      )}
       {/* <button
         // style={styles}
         onClick={() => field(id, isClicked, column)}

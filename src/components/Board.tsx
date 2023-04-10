@@ -10,13 +10,14 @@ import AcceptButton from "../Layout/Buttons/AcceptButton";
 import markerRed from "../../public/images/marker-red.svg";
 import markerYellow from "../../public/images/marker-yellow.svg";
 import counterRedSmall from "../../public/images/counter-red-small.svg";
-import counterRedBig from "../../public/images/counter-red-big.svg";
+import counterRedBig from "../../public/images/counter-red-large.svg";
 import counterYellowSmall from "../../public/images/counter-yellow-small.svg";
-import counterYellowBig from "../../public/images/counter-yellow-big.svg";
+import counterYellowBig from "../../public/images/counter-yellow-large.svg";
 import frontBoardLayerSmall from "../../public/images/board-layer-white-small.svg";
 import backBoardLayerSmall from "../../public/images/board-layer-black-small.svg";
 import frontBoardLayerLarge from "../../public/images/board-layer-white-large.svg";
 import backBoardLayerLarge from "../../public/images/board-layer-black-large.svg";
+// import counterRedSmall from "../../public/images/counter-red-small.svg";
 type BoardProps = {};
 
 type BoardFieldProps = {
@@ -45,6 +46,8 @@ const Board: React.FC<BoardProps> = () => {
   const [winnerFieldId, setWinnerFieldId] = useState<string[]>([]);
   const [firstElement, setFirstElement] = useState<number>(0);
   const [yOdleglosc, setYOdleglosc] = useState(0);
+
+  const [currentColumnHover, setCurrentColumnHover] = useState<number>(-1);
   const swichtPlayerTurn = () => {
     setCurrentPlayerTurn((prev) => (prev === "white" ? "red" : "white"));
   };
@@ -99,6 +102,9 @@ const Board: React.FC<BoardProps> = () => {
     // console.log(preparedBoard);
   }, []);
 
+  useEffect(() => {
+    console.log(currentColumnHover);
+  }, [currentColumnHover]);
   useEffect(() => {
     checkRows();
     checkColumns();
@@ -301,6 +307,10 @@ const Board: React.FC<BoardProps> = () => {
     // checkRows();
     swichtPlayerTurn();
   };
+
+  const currentHoverColumn = (column: number) => {
+    setCurrentColumnHover(column);
+  };
   const printBoard = preparedBoard.map((row, rowId) =>
     row.map((col: BoardFieldProps, colId: number) => {
       return (
@@ -315,6 +325,7 @@ const Board: React.FC<BoardProps> = () => {
           isWinner={col.isWinner}
           field={() => clickField(col.id, col.isClicked, col.column, col.row)}
           currentField={preparedBoard}
+          currentHoverColumn={() => currentHoverColumn(col.column)}
         />
       );
     })
@@ -322,6 +333,10 @@ const Board: React.FC<BoardProps> = () => {
 
   return (
     <div>
+      {/* <Image src={counterYellowSmall} alt="" />
+      <span className="w-[41px] aspect-square block bg-slate-500 rounded-full"></span>
+      <span className="w-[70px] aspect-square block bg-slate-500 rounded-full"></span>
+      <Image src={counterYellowBig} alt="" /> */}
       {/* <PlayVersus type="vsPlayer" />
       <PlayVersus type="vsCPU" />
       <ContinueEndGame type="ContinueGame" />
@@ -330,7 +345,8 @@ const Board: React.FC<BoardProps> = () => {
       {/* <Menu /> */}
       <motion.div
         animate={{ x: 30, y: yOdleglosc }}
-        transition={{ type: "spring", stiffness: 100, duration: 1 }}>
+        transition={{ type: "spring", stiffness: 100, duration: 1 }}
+      >
         <h1 className="text-4xl text-red-500">Test</h1>
       </motion.div>
       <div className="relative flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1">
@@ -339,41 +355,51 @@ const Board: React.FC<BoardProps> = () => {
           alt="game board"
           className="absolute z-[-4]"
         />
+        {/* <Image src={counterRedSmall} className="ml-10 z-[-5] " alt="" /> */}
         <Image
           src={currentImage.back}
           alt="game board"
-          className="absolute z-[-5]"
+          className="absolute z-[-6]"
         />
-        <div className="mt-2 w-[330px] ">{printBoard}</div>
+        <div className="mt-2 ml-2 w-[350px] sm:w-[632px] sm:ml-8 sm:mt-5 z-[500] ">
+          {printBoard}
+        </div>
       </div>
+
       <button
         style={{ margin: "2rem", background: "teal" }}
-        onClick={checkRows}>
+        onClick={checkRows}
+      >
         Sprawdz wiersze
       </button>
       <button
         style={{ margin: "2rem", background: "teal" }}
-        onClick={checkColumns}>
+        onClick={checkColumns}
+      >
         Sprawdz kolumny
       </button>
       <button
         style={{ margin: "2rem", background: "teal" }}
-        onClick={checkDiagonals}>
+        onClick={checkDiagonals}
+      >
         Sprawdz przekatne
       </button>
       <button
         style={{ margin: "2rem", background: "teal" }}
-        onClick={resetField}>
+        onClick={resetField}
+      >
         Reset
       </button>
       <button
         style={{ margin: "2rem", background: "teal" }}
-        onClick={swichtPlayerTurn}>
+        onClick={swichtPlayerTurn}
+      >
         Zmiana gracza
       </button>
       <button
         style={{ margin: "2rem", background: "teal" }}
-        onClick={() => setYOdleglosc((prev) => prev + 30)}>
+        onClick={() => setYOdleglosc((prev) => prev + 30)}
+      >
         Zwieksz yOdleglosc
       </button>
     </div>
