@@ -16,3 +16,6 @@ p {
 .menu {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 }
+.kk {
+  grid-template-columns: repeat(7, min-content);
+}

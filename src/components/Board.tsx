@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { CSSProperties, useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import SingleField from "./SingleField";
 import { motion } from "framer-motion";
@@ -42,6 +42,7 @@ const Board: React.FC<BoardProps> = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [whiteScore, setWhiteScore] = useState<number>(1);
+  const [markerDistance, setMarkerDistance] = useState<number>(0);
   const [winner, setWinner] = useState<PlayerColor>("none");
   const [winnerFieldId, setWinnerFieldId] = useState<string[]>([]);
   const [firstElement, setFirstElement] = useState<number>(0);
@@ -103,7 +104,8 @@ const Board: React.FC<BoardProps> = () => {
   }, []);
 
   useEffect(() => {
-    console.log(currentColumnHover);
+    // console.log(currentColumnHover);
+    setMarkerDistance(30 + currentColumnHover * 90);
   }, [currentColumnHover]);
   useEffect(() => {
     checkRows();
@@ -141,6 +143,7 @@ const Board: React.FC<BoardProps> = () => {
     );
   }, [winner]);
 
+  useEffect(() => {}, []);
   const checkWinner = (arrayToCheck: BoardFieldProps[]) => {
     // console.log(arrayToCheck);
 
@@ -309,6 +312,8 @@ const Board: React.FC<BoardProps> = () => {
   };
 
   const currentHoverColumn = (column: number) => {
+    console.log(column);
+
     setCurrentColumnHover(column);
   };
   const printBoard = preparedBoard.map((row, rowId) =>
@@ -330,6 +335,10 @@ const Board: React.FC<BoardProps> = () => {
       );
     })
   );
+  const dystans: CSSProperties = {
+    // left: `70 * ${markerDistance}px`,
+    left: markerDistance,
+  };
 
   return (
     <div>
@@ -347,9 +356,11 @@ const Board: React.FC<BoardProps> = () => {
         animate={{ x: 30, y: yOdleglosc }}
         transition={{ type: "spring", stiffness: 100, duration: 1 }}
       >
-        <h1 className="text-4xl text-red-500">Test</h1>
+        <h1 className="text-4xl text-red-500">
+          Test{currentColumnHover}, gracz {currentPlayerTurn} {markerDistance}
+        </h1>
       </motion.div>
-      <div className="relative flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1">
+      <div className="relative w-[632px] mx-auto flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1">
         <Image
           src={currentImage.front}
           alt="game board"
@@ -361,9 +372,27 @@ const Board: React.FC<BoardProps> = () => {
           alt="game board"
           className="absolute z-[-6]"
         />
-        <div className="mt-2 ml-2 w-[350px] sm:w-[632px] sm:ml-8 sm:mt-5 z-[500] ">
+        <Image
+          style={dystans}
+          src={markerRed}
+          className={`absolute top-[-31px]`}
+          alt=" "
+        />
+
+        <div
+          className="z-30 grid grid-cols-[repeat(7,45px)] sm:grid-cols-[repeat(7,75px)] 
+        sm:w-[630px] grid-rows-6 mt-2 sm:mt-5 sm:ml-4 gap-[1px] sm:gap-[12.5px]"
+        >
           {printBoard}
         </div>
+        {/* <div className="mt-2 ml-2 w-[350px] sm:w-[632px] sm:ml-8 sm:mt-5 z-[500] ">
+          {printBoard}
+        </div> */}
+      </div>
+      <div className="flex mt-20">
+        <span className="w-[75px] aspect-square block items-start bg-slate-500 rounded-full "></span>
+        <Image src={counterRedBig} className="ml-10 z-[-5] " alt="" />
+        <Image src={counterRedSmall} className="ml-10 z-[-5] " alt="" />
       </div>
 
       <button

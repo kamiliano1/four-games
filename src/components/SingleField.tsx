@@ -108,7 +108,7 @@ const SingleField: React.FC<SingleFieldProps> = ({
       {isClicked ? (
         <div className="inline relative">
           <Image
-            className="cursor-pointer inline mr-[6.14px] sm:mr-[18px] sm:mb-[12px] "
+            className="cursor-pointer   "
             src={images}
             // style={styles}
             alt=""
@@ -116,20 +116,24 @@ const SingleField: React.FC<SingleFieldProps> = ({
             // onClick={() => field(id, isClicked, column)}
           />
           {isWinner && (
-            <span className="absolute top-0 left-[10.5px] flex border-[6px] border-white rounded-full aspect-square items-start w-[20px] sm:w-[34px] sm:left-[17px] sm:top-[-10px] "></span>
+            <span className="absolute top-[10px] left-[11.5px] flex border-[6px] border-white rounded-full aspect-square items-start w-[20px] sm:w-[34px] sm:left-[18px] sm:top-[16px] "></span>
           )}
         </div>
       ) : (
-        <div className="inline">
+        <>
           {windowWidth > 738 ? (
             <span
-              className="w-[75px] aspect-square inline-block bg-slate-500 rounded-full mr-[12.5px] mb-[5px]"
+              className="w-[75px] aspect-square inline-block rounded-full "
               onClick={() => field(id, isClicked, column)}
+              onMouseEnter={() => currentHoverColumn(column)}
+              onMouseLeave={() => currentHoverColumn(-1)}
             ></span>
           ) : (
             <span
-              className="w-[41px] h-[46px] inline-block bg-slate-500 rounded-full mr-[6.6px]"
+              className="w-[45px] aspect-square inline-block rounded-full "
               onClick={() => field(id, isClicked, column)}
+              onMouseEnter={() => currentHoverColumn(column)}
+              onMouseLeave={() => currentHoverColumn(-1)}
             ></span>
           )}
           {/*  */}
@@ -146,13 +150,13 @@ const SingleField: React.FC<SingleFieldProps> = ({
             // onMouseEnter={() => setCurrentColumnHover(column)}
             // onMouseLeave={() => setCurrentColumnHover(-1)}
           /> */}
-        </div>
+        </>
       )}
       {/* <button
         // style={styles}
         onClick={() => field(id, isClicked, column)}
         className="p-5  bg-yellow">{`R ${row + 1} C ${column + 1}`}</button> */}
-      {column === 6 && <br />}
+      {/* {column === 6 && <br />} */}
     </>
   );
 };
