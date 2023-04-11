@@ -13,6 +13,7 @@ import turnBackgroundYellow from "../../../public/images/turn-background-yellow.
 import PlayerRedTurnBox from "./PlayerRedTurnBox";
 import PlayerYellowTurnBox from "./PlayerYellowTurnBox";
 import WinnerBox from "./WinnerBox";
+import Board from "../Board";
 type GameProps = {};
 
 const Game: React.FC<GameProps> = () => {
@@ -60,22 +61,24 @@ const Game: React.FC<GameProps> = () => {
             <Image src={logo} alt="web logo" />
             <RestartButton />
           </div>
+          {/* <Board /> */}
           <div className="grid grid-rows-[81px, auto] grid-cols-2 lg:grid-rows-[584px] lg:grid-cols-[auto,auto,auto] lg:gap-12 place-items-center">
             <PlayerScore name="Player 1" playerId={1} score={12} />
             <PlayerScore name="Player 2" playerId={2} score={23} />
 
-            <div className="relative flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1">
-              <Image
-                src={currentImage.front}
-                alt="game board"
-                className=" z-[-4]"
-              />
-              <Image
-                src={currentImage.back}
-                alt="game board"
-                className="absolute z-[-5]"
-              />
-            </div>
+            {/* <div className="relative flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1"> */}
+            <Board />
+            {/* <Image
+              src={currentImage.front}
+              alt="game board"
+              className=" z-[-4]"
+            />
+            <Image
+              src={currentImage.back}
+              alt="game board"
+              className="absolute z-[-5]"
+            /> */}
+            {/* </div> */}
           </div>
         </div>
         <PlayerRedTurnBox />

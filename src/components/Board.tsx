@@ -17,6 +17,9 @@ import frontBoardLayerSmall from "../../public/images/board-layer-white-small.sv
 import backBoardLayerSmall from "../../public/images/board-layer-black-small.svg";
 import frontBoardLayerLarge from "../../public/images/board-layer-white-large.svg";
 import backBoardLayerLarge from "../../public/images/board-layer-black-large.svg";
+import { useRecoilState } from "recoil";
+import { BoardFieldStateType, boardFieldState } from "../atoms/boardAtom";
+
 // import counterRedSmall from "../../public/images/counter-red-small.svg";
 type BoardProps = {};
 
@@ -33,10 +36,13 @@ type BoardFieldProps = {
 type PlayerColor = "red" | "white" | "none";
 
 const Board: React.FC<BoardProps> = () => {
+  const [boardState, setBoardState] = useRecoilState(boardFieldState);
+  console.log(boardState, "gra");
+
   const [currentPlayerTurn, setCurrentPlayerTurn] =
     useState<PlayerColor>("white");
 
-  const [preparedBoard, setPreparedBoard] = useState(
+  const [preparedBoard, setboardState] = useState(
     new Array(6).fill(new Array(7).fill("") as BoardFieldProps[])
   );
 
@@ -87,7 +93,7 @@ const Board: React.FC<BoardProps> = () => {
   //   console.log(whitePlayerScore);
   // }, [whitePlayerScore]);
   useEffect(() => {
-    setPreparedBoard((item) =>
+    setBoardState((item) =>
       item.map((row, rowId) =>
         row.map((col: number, colId: number) => ({
           id: nanoid(),
@@ -100,7 +106,7 @@ const Board: React.FC<BoardProps> = () => {
         }))
       )
     );
-    // console.log(preparedBoard);
+    // console.log(boardState);
   }, []);
 
   useEffect(() => {
@@ -111,9 +117,9 @@ const Board: React.FC<BoardProps> = () => {
     checkRows();
     checkColumns();
     checkDiagonals();
-  }, [preparedBoard]);
+  }, [boardState]);
   const resetField = () => {
-    setPreparedBoard((item) =>
+    setBoardState((item) =>
       item.map((row, rowId) =>
         row.map((col: number, colId: number) => ({
           id: nanoid(),
@@ -132,9 +138,18 @@ const Board: React.FC<BoardProps> = () => {
   useEffect(() => {
     console.log(winner);
 
-    setPreparedBoard((prev) =>
+    setboardState((prev) =>
       prev.map((item) =>
-        item.map((field: BoardFieldProps) => {
+        item.map((field: BoardFieldStateType) => {
+          return winnerFieldId.includes(field.id)
+            ? { ...field, isWinner: true }
+            : field;
+        })
+      )
+    );
+    setBoardState((prev) =>
+      prev.map((item) =>
+        item.map((field: BoardFieldStateType) => {
           return winnerFieldId.includes(field.id)
             ? { ...field, isWinner: true }
             : field;
@@ -142,9 +157,38 @@ const Board: React.FC<BoardProps> = () => {
       )
     );
   }, [winner]);
+  // const defaulBoardFieldState: BoardFieldStateType[] = new Array(6).fill(
+  //   new Array(7).fill("")
+  // );
+  // const kk = defaulBoardFieldState.map((row, rowId) => {
+  //   row.map((col: number, colId: number) => ({
+  //     id: nanoid(),
+  //     // name: `Row ${rowId} Col ${colId}`,
+  //     row: rowId,
+  //     column: colId,
+  //     isClicked: false,
+  //     playerUsed: "none",
+  //     isWinner: false,
+  //   }));
+  // });
 
+  // const kkk = defaulBoardFieldState.map((row, rowId) => {
+  //   return row.map((col: number, colId: number) => ({
+  //     id: nanoid(),
+  //     // name: `Row ${rowId} Col ${colId}`,
+  //     row: rowId,
+  //     column: colId,
+  //     isClicked: false,
+  //     playerUsed: "none",
+  //     isWinner: false,
+  //   }));
+  // });
+
+  // console.log(kkk, "llll");
   useEffect(() => {}, []);
-  const checkWinner = (arrayToCheck: BoardFieldProps[]) => {
+  const checkWinner = (
+    arrayToCheck: BoardFieldStateType[] | BoardFieldStateType
+  ) => {
     // console.log(arrayToCheck);
 
     if (arrayToCheck.length) {
@@ -153,7 +197,7 @@ const Board: React.FC<BoardProps> = () => {
       let whiteWinnerArray: string[] = [];
       let redWinnerArray: string[] = [];
 
-      arrayToCheck.map((field: BoardFieldProps) => {
+      arrayToCheck.map((field: BoardFieldStateType) => {
         if (field.playerUsed === "white") {
           whitePlayerScore++;
           whiteWinnerArray.push(field.id);
@@ -189,7 +233,7 @@ const Board: React.FC<BoardProps> = () => {
       //     redWinnerArray = [];
       //   }
       // });
-      arrayToCheck.map((field: BoardFieldProps) => {
+      arrayToCheck.map((field: BoardFieldStateType) => {
         if (field.playerUsed === "red") {
           redPlayerScore++;
           redWinnerArray.push(field.id);
@@ -211,9 +255,9 @@ const Board: React.FC<BoardProps> = () => {
   const checkColumns = () => {
     const columnIndex = [0, 1, 2, 3, 4, 5, 6];
     columnIndex.map((columnId) => {
-      const diagonalFieldArray: BoardFieldProps[] = [];
-      preparedBoard.filter((item) => {
-        return item.filter((field: BoardFieldProps) => {
+      const diagonalFieldArray: BoardFieldStateType[] = [];
+      boardState.filter((item) => {
+        return item.filter((field: BoardFieldStateType) => {
           if (field.column === columnId) diagonalFieldArray.push(field);
           checkWinner(diagonalFieldArray);
         });
@@ -221,7 +265,7 @@ const Board: React.FC<BoardProps> = () => {
     });
   };
   const checkRows = () => {
-    preparedBoard.map((rows) => {
+    boardState.map((rows: BoardFieldStateType) => {
       checkWinner(rows);
     });
   };
@@ -230,11 +274,11 @@ const Board: React.FC<BoardProps> = () => {
     const rowCounter = [-4, -3, -2, -1, 0, 1, 2, 3];
 
     rowCounter.map((columnId) => {
-      const diagonalFieldArray: BoardFieldProps[] = [];
-      const diagonalFieldArrayOne: BoardFieldProps[] = [];
-      const diagonalFieldArrayTwo: BoardFieldProps[] = [];
-      preparedBoard.filter((item, row: number) => {
-        return item.filter((field: BoardFieldProps, col: number) => {
+      const diagonalFieldArray: BoardFieldStateType[] = [];
+      const diagonalFieldArrayOne: BoardFieldStateType[] = [];
+      const diagonalFieldArrayTwo: BoardFieldStateType[] = [];
+      boardState.filter((item, row: number) => {
+        return item.filter((field: BoardFieldStateType, col: number) => {
           if (field.row === row && field.column === row + columnId)
             diagonalFieldArray.push(field);
           checkWinner(diagonalFieldArray);
@@ -245,7 +289,7 @@ const Board: React.FC<BoardProps> = () => {
 
           if (
             field.row === row &&
-            field.column === preparedBoard.length - row + columnId
+            field.column === boardState.length - row + columnId
           ) {
             diagonalFieldArrayTwo.push(field);
             checkWinner(diagonalFieldArrayTwo);
@@ -254,7 +298,7 @@ const Board: React.FC<BoardProps> = () => {
       });
     });
     // console.log(diagonalArrayTestowa, "diag");
-    // setPreparedBoard((prev) =>
+    // setboardState((prev) =>
     //   prev.map((item) =>
     //     item.map((field: BoardFieldProps) => {
     //       return diagonalArrayTestowa.includes(field.id)
@@ -273,22 +317,31 @@ const Board: React.FC<BoardProps> = () => {
   ) => {
     if (isClicked) return;
 
-    const diagonalFieldArray: BoardFieldProps[] = [];
-    preparedBoard.filter((item) => {
-      return item.filter((field: BoardFieldProps) => {
+    const diagonalFieldArray: BoardFieldStateType[] = [];
+    boardState.filter((item) => {
+      return item.filter((field: BoardFieldStateType) => {
         if (field.column === fieldCol) diagonalFieldArray.push(field);
       });
     });
 
     const lastEmptyIndexColumn = diagonalFieldArray.findLastIndex(
-      (item: BoardFieldProps) => {
+      (item: BoardFieldStateType) => {
         return item.isClicked === false;
       }
     );
     const lastEmptyId = diagonalFieldArray[lastEmptyIndexColumn].id;
-    setPreparedBoard((item) =>
+    setboardState((item) =>
       item.map((row) =>
-        row.map((col: BoardFieldProps) => {
+        row.map((col: BoardFieldStateType) => {
+          return col.id === lastEmptyId
+            ? { ...col, isClicked: true, playerUsed: currentPlayerTurn }
+            : col;
+        })
+      )
+    );
+    setBoardState((item) =>
+      item.map((row) =>
+        row.map((col: BoardFieldStateType) => {
           return col.id === lastEmptyId
             ? { ...col, isClicked: true, playerUsed: currentPlayerTurn }
             : col;
@@ -296,7 +349,7 @@ const Board: React.FC<BoardProps> = () => {
       )
     );
 
-    // setPreparedBoard((item) =>
+    // setboardState((item) =>
     //   item.map((row) =>
     //     row.map((col: BoardFieldProps) => {
     //       return col.id === id
@@ -316,8 +369,8 @@ const Board: React.FC<BoardProps> = () => {
 
     setCurrentColumnHover(column);
   };
-  const printBoard = preparedBoard.map((row, rowId) =>
-    row.map((col: BoardFieldProps, colId: number) => {
+  const printBoard = boardState.map((row, rowId) =>
+    row.map((col: BoardFieldStateType, colId: number) => {
       return (
         <SingleField
           key={col.id}
@@ -329,7 +382,7 @@ const Board: React.FC<BoardProps> = () => {
           playerUsed={col.playerUsed}
           isWinner={col.isWinner}
           field={() => clickField(col.id, col.isClicked, col.column, col.row)}
-          currentField={preparedBoard}
+          currentField={boardState}
           currentHoverColumn={() => currentHoverColumn(col.column)}
         />
       );
@@ -341,7 +394,13 @@ const Board: React.FC<BoardProps> = () => {
   };
 
   return (
-    <div>
+    <div className="relative flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1">
+      {/* <Image
+        src={counterYellowSmall}
+        className="w-[33.95px] h-[33.95px]"
+        alt=""
+      /> */}
+
       {/* <Image src={counterYellowSmall} alt="" />
       <span className="w-[41px] aspect-square block bg-slate-500 rounded-full"></span>
       <span className="w-[70px] aspect-square block bg-slate-500 rounded-full"></span>
@@ -352,36 +411,38 @@ const Board: React.FC<BoardProps> = () => {
       <ContinueEndGame type="QuitGame" /> */}
 
       {/* <Menu /> */}
-      <motion.div
+      {/* <motion.div
         animate={{ x: 30, y: yOdleglosc }}
         transition={{ type: "spring", stiffness: 100, duration: 1 }}
       >
         <h1 className="text-4xl text-red-500">
           Test{currentColumnHover}, gracz {currentPlayerTurn} {markerDistance}
         </h1>
-      </motion.div>
-      <div className="relative w-[632px] mx-auto flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1">
+      </motion.div> */}
+      <div className="relative mx-auto flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1">
         <Image
           src={currentImage.front}
           alt="game board"
-          className="absolute z-[-4]"
+          className="absolute z-[-4] "
         />
         {/* <Image src={counterRedSmall} className="ml-10 z-[-5] " alt="" /> */}
-        <Image
+        {/* <Image
           src={currentImage.back}
           alt="game board"
           className="absolute z-[-6]"
-        />
-        <Image
-          style={dystans}
-          src={markerRed}
-          className={`absolute top-[-31px]`}
-          alt=" "
-        />
+        /> */}
+        {/* {windowWidth > 1023 && (
+          <Image
+            style={dystans}
+            src={markerRed}
+            className={`absolute top-[-31px]`}
+            alt=" "
+          />
+        )} */}
 
         <div
-          className="z-30 grid grid-cols-[repeat(7,45px)] sm:grid-cols-[repeat(7,75px)] 
-        sm:w-[630px] grid-rows-6 mt-2 sm:mt-5 sm:ml-4 gap-[1px] sm:gap-[12.5px]"
+          className="z-[30] ml-1 grid grid-cols-[repeat(7,33.95px)] grid-rows-6  
+sm:grid-cols-[repeat(7,75px)] sm:w-[630px] sm:mt-5 sm:ml-9 sm:gap-[12.5px]"
         >
           {printBoard}
         </div>
@@ -389,13 +450,13 @@ const Board: React.FC<BoardProps> = () => {
           {printBoard}
         </div> */}
       </div>
-      <div className="flex mt-20">
+      {/* <div className="flex mt-20">
         <span className="w-[75px] aspect-square block items-start bg-slate-500 rounded-full "></span>
         <Image src={counterRedBig} className="ml-10 z-[-5] " alt="" />
         <Image src={counterRedSmall} className="ml-10 z-[-5] " alt="" />
-      </div>
+      </div> */}
 
-      <button
+      {/* <button
         style={{ margin: "2rem", background: "teal" }}
         onClick={checkRows}
       >
@@ -430,7 +491,7 @@ const Board: React.FC<BoardProps> = () => {
         onClick={() => setYOdleglosc((prev) => prev + 30)}
       >
         Zwieksz yOdleglosc
-      </button>
+      </button> */}
     </div>
   );
 };

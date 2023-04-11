@@ -106,9 +106,9 @@ const SingleField: React.FC<SingleFieldProps> = ({
   return (
     <>
       {isClicked ? (
-        <div className="inline relative">
+        <div className="inline relative ">
           <Image
-            className="cursor-pointer   "
+            className={`${windowWidth < 700 && "w-[33.95px] h-[33.95px]"} `}
             src={images}
             // style={styles}
             alt=""
@@ -121,16 +121,24 @@ const SingleField: React.FC<SingleFieldProps> = ({
         </div>
       ) : (
         <>
-          {windowWidth > 738 ? (
+          {windowWidth > 700 ? (
             <span
-              className="w-[75px] aspect-square inline-block rounded-full "
+              className="cursor-pointer w-[75px] aspect-square inline-block rounded-full "
               onClick={() => field(id, isClicked, column)}
               onMouseEnter={() => currentHoverColumn(column)}
               onMouseLeave={() => currentHoverColumn(-1)}
             ></span>
           ) : (
+            // <Image
+            //   className=""
+            //   src={images}
+            //   // style={styles}
+            //   alt=""
+            //   // onClick={() => console.log(column)}
+            //   // onClick={() => field(id, isClicked, column)}
+            // />
             <span
-              className="w-[45px] aspect-square inline-block rounded-full "
+              className="cursor-pointer w-[33.95px] aspect-square inline-block rounded-full "
               onClick={() => field(id, isClicked, column)}
               onMouseEnter={() => currentHoverColumn(column)}
               onMouseLeave={() => currentHoverColumn(-1)}

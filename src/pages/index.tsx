@@ -24,18 +24,20 @@ export default function Home() {
         />
       </Head>
       <main className="">
-        {/* {modalState.open && (
+        {/* {modalState.open ? (
           <>
             {modalState.view === "start" && <StartModal />}
             {modalState.view === "pause" && <PauseModal />}
             {modalState.view === "rules" && <RulesModal />}
           </>
+        ) : (
+          <Game />
         )} */}
-
-        <Board />
+        <Game />
+        {/* <Board /> */}
         {/* <StartModal /> */}
         {/* <RulesModal /> */}
-        {/* <Game /> */}
+
         {/* <Board /> */}
       </main>
     </>
