@@ -7,7 +7,7 @@ export type BoardFieldStateType = {
   row: number;
   column: number;
   isClicked: boolean;
-  playerUsed: "none" | "red" | "white";
+  playerUsed: "none" | "red" | "yellow";
   isWinner: boolean;
 };
 

@@ -10,7 +10,7 @@ type BoardFieldProps = {
   row: number;
   column: number;
   isClicked: boolean;
-  playerUsed: "none" | "red" | "white";
+  playerUsed: "none" | "red" | "yellow";
   isWinner: boolean;
 };
 
@@ -20,7 +20,7 @@ type SingleFieldProps = {
   row: number;
   column: number;
   isClicked: boolean;
-  playerUsed: "none" | "red" | "white";
+  playerUsed: "none" | "red" | "yellow";
   isWinner: boolean;
   field: (id: string, isClicked: boolean, column: number) => void;
   currentField: BoardFieldProps[];
@@ -70,14 +70,14 @@ const SingleField: React.FC<SingleFieldProps> = ({
   useEffect(() => {
     if (playerUsed === "red") {
       setImages(currentImage.smallRed);
-    } else if (playerUsed === "white") {
+    } else if (playerUsed === "yellow") {
       setImages(currentImage.smallYellow);
     }
     if (windowWidth > 737) {
       if (playerUsed === "red") {
         setImages(currentImage.bigRed);
         fieldBackground = "red";
-      } else if (playerUsed === "white") {
+      } else if (playerUsed === "yellow") {
         setImages(currentImage.bigYellow);
         fieldBackground = "blue";
       }
@@ -93,7 +93,7 @@ const SingleField: React.FC<SingleFieldProps> = ({
     fieldBackground = "pink";
   } else if (playerUsed === "red") {
     fieldBackground = "red";
-  } else if (playerUsed === "white") {
+  } else if (playerUsed === "yellow") {
     fieldBackground = "green";
   }
   // const styles: CSSProperties = {
@@ -108,7 +108,7 @@ const SingleField: React.FC<SingleFieldProps> = ({
       {isClicked ? (
         <div className="inline relative ">
           <Image
-            className={`${windowWidth < 700 && "w-[33.95px] h-[33.95px]"} `}
+            className={`${windowWidth < 700 && ""} `}
             src={images}
             // style={styles}
             alt=""

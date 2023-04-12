@@ -28,7 +28,7 @@ const PlayerScore: React.FC<PlayerScoreProps> = ({ name, score, playerId }) => {
       <h2
         className={`uppercase text-500 ${
           playerId === 1 ? "sm:order-[-2]" : "sm:order-10"
-        }`}
+        } lg:order-[-2]`}
       >
         {name}
       </h2>

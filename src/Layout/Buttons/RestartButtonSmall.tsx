@@ -1,11 +1,13 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { BoardFieldStateType, boardFieldState } from "../../atoms/boardAtom";
+import { boardFieldState } from "../../atoms/boardAtom";
+import { gameState } from "../../atoms/gameAtom";
 import { nanoid } from "nanoid";
 type RestartButtonSmallProps = {};
 
 const RestartButtonSmall: React.FC<RestartButtonSmallProps> = () => {
   const [boardState, setBoardState] = useRecoilState(boardFieldState);
+  const [gameStates, setGameStates] = useRecoilState(gameState);
   const reset = () => {
     setBoardState((item) =>
       item.map((row, rowId) =>
@@ -19,6 +21,23 @@ const RestartButtonSmall: React.FC<RestartButtonSmallProps> = () => {
           isWinner: false,
         }))
       )
+    );
+    setGameStates((prev) =>
+      prev.playerStarted === "red"
+        ? {
+            ...prev,
+            playerStarted: "yellow",
+            currentPlayerTurn: "yellow",
+            yellowPlayerRemainingTime: 30,
+            redPlayerRemainingTime: 30,
+          }
+        : {
+            ...prev,
+            playerStarted: "red",
+            currentPlayerTurn: "red",
+            yellowPlayerRemainingTime: 30,
+            redPlayerRemainingTime: 30,
+          }
     );
   };
   return (

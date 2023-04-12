@@ -14,6 +14,9 @@ import PlayerRedTurnBox from "./PlayerRedTurnBox";
 import PlayerYellowTurnBox from "./PlayerYellowTurnBox";
 import WinnerBox from "./WinnerBox";
 import Board from "../Board";
+import { gameState } from "../../atoms/gameAtom";
+import { useRecoilState } from "recoil";
+
 type GameProps = {};
 
 const Game: React.FC<GameProps> = () => {
@@ -21,6 +24,7 @@ const Game: React.FC<GameProps> = () => {
     front: StaticImageData;
     back: StaticImageData;
   };
+  const [gameStates, setGameStates] = useRecoilState(gameState);
   const [windowWidth, setWindowWidth] = useState<number>(0);
   const [currentImage, setCurrentImage] = useState<picturesType>({
     front: frontBoardLayerSmall,
@@ -49,22 +53,33 @@ const Game: React.FC<GameProps> = () => {
         });
   }, [windowWidth]);
   return (
-    <div className="h-full ">
-      <div
+    <div className=" ">
+      {/* <div
         className="bg-darkPurple absolute w-full h-[236px] bottom-0 
       rounded-t-[60px] rounder-r-[60px] -z-40"
-      ></div>
-      <div className="px-5 sm:px-[0] py-14">
-        <div className="w-[335px] sm:w-[632px] lg:w-[1010px] mx-auto ">
+      ></div> */}
+      <div className="px-5 sm:px-0 py-14">
+        <div className="w-[335px] sm:w-[632px] lg:w-[1110px] mx-auto ">
+          <h1 className="text-[5rem] text-center">
+            {gameStates.currentPlayerTurn}
+          </h1>
           <div className="flex items-center justify-between sm:w-[632px] sm:mx-auto">
             <MenuButton />
             <Image src={logo} alt="web logo" />
             <RestartButton />
           </div>
           {/* <Board /> */}
-          <div className="grid grid-rows-[81px, auto] grid-cols-2 lg:grid-rows-[584px] lg:grid-cols-[auto,auto,auto] lg:gap-12 place-items-center">
-            <PlayerScore name="Player 1" playerId={1} score={12} />
-            <PlayerScore name="Player 2" playerId={2} score={23} />
+          <div className="grid grid-rows-[150px, auto] grid-cols-2 lg:grid-rows-[584px] lg:grid-cols-[auto,auto,auto] lg:gap-12 place-items-center">
+            <PlayerScore
+              name="Player 1"
+              playerId={1}
+              score={gameStates.redPlayerScore}
+            />
+            <PlayerScore
+              name="Player 2"
+              playerId={2}
+              score={gameStates.yellowPlayerScore}
+            />
 
             {/* <div className="relative flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1"> */}
             <Board />
@@ -81,10 +96,18 @@ const Game: React.FC<GameProps> = () => {
             {/* </div> */}
           </div>
         </div>
-        <PlayerRedTurnBox />
-        {/* <PlayerYellowTurnBox /> */}
-
-        {/* <WinnerBox /> */}
+        {gameStates.isGameOver ? (
+          <WinnerBox winnerName={gameStates.winnerPlayer} />
+        ) : (
+          <>
+            {gameStates.currentPlayerTurn === "red" ? (
+              <PlayerRedTurnBox />
+            ) : (
+              <PlayerYellowTurnBox />
+            )}
+          </>
+        )}
+        {/* <WinnerBox winnerName={gameStates.winnerPlayer} /> */}
       </div>
     </div>
   );

@@ -19,6 +19,8 @@ import frontBoardLayerLarge from "../../public/images/board-layer-white-large.sv
 import backBoardLayerLarge from "../../public/images/board-layer-black-large.svg";
 import { useRecoilState } from "recoil";
 import { BoardFieldStateType, boardFieldState } from "../atoms/boardAtom";
+import { gameState } from "../atoms/gameAtom";
+// import { useRecoilState } from "recoil";
 
 // import counterRedSmall from "../../public/images/counter-red-small.svg";
 type BoardProps = {};
@@ -29,22 +31,23 @@ type BoardFieldProps = {
   row: number;
   column: number;
   isClicked: boolean;
-  playerUsed: "none" | "red" | "white";
+  playerUsed: "none" | "red" | "yellow";
   isWinner: boolean;
 };
 
-type PlayerColor = "red" | "white" | "none";
+type PlayerColor = "red" | "yellow" | "none";
 
 const Board: React.FC<BoardProps> = () => {
   const [boardState, setBoardState] = useRecoilState(boardFieldState);
-  console.log(boardState, "gra");
+  const [gameStates, setGameStates] = useRecoilState(gameState);
+  // console.log(boardState, "gra");
 
   const [currentPlayerTurn, setCurrentPlayerTurn] =
-    useState<PlayerColor>("white");
+    useState<PlayerColor>("yellow");
 
-  const [preparedBoard, setboardState] = useState(
-    new Array(6).fill(new Array(7).fill("") as BoardFieldProps[])
-  );
+  // const [preparedBoard, setboardState] = useState(
+  //   new Array(6).fill(new Array(7).fill("") as BoardFieldProps[])
+  // );
 
   const [loading, setLoading] = useState<boolean>(false);
   const [whiteScore, setWhiteScore] = useState<number>(1);
@@ -56,7 +59,14 @@ const Board: React.FC<BoardProps> = () => {
 
   const [currentColumnHover, setCurrentColumnHover] = useState<number>(-1);
   const swichtPlayerTurn = () => {
-    setCurrentPlayerTurn((prev) => (prev === "white" ? "red" : "white"));
+    setGameStates((prev) =>
+      prev.currentPlayerTurn === "red"
+        ? { ...prev, currentPlayerTurn: "yellow" }
+        : { ...prev, currentPlayerTurn: "red" }
+    );
+    // console.log(gameStates, "tura");
+
+    // setCurrentPlayerTurn((prev) => (prev === "yellow" ? "red" : "yellow"));
   };
   type picturesType = {
     front: StaticImageData;
@@ -133,15 +143,16 @@ const Board: React.FC<BoardProps> = () => {
     );
     setWinner("none");
     setWinnerFieldId([]);
+    setGameStates((prev) => ({ ...prev, winnerFieldArray: [] }));
   };
 
   useEffect(() => {
     console.log(winner);
 
-    setboardState((prev) =>
+    setBoardState((prev) =>
       prev.map((item) =>
         item.map((field: BoardFieldStateType) => {
-          return winnerFieldId.includes(field.id)
+          return gameStates.winnerFieldArray.includes(field.id)
             ? { ...field, isWinner: true }
             : field;
         })
@@ -150,7 +161,10 @@ const Board: React.FC<BoardProps> = () => {
     setBoardState((prev) =>
       prev.map((item) =>
         item.map((field: BoardFieldStateType) => {
-          return winnerFieldId.includes(field.id)
+          // console.log(gameStates.winnerFieldArray.includes(field.id), "tak");
+          // console.log(winnerFieldId.includes(field.id), "tak");
+
+          return gameStates.winnerFieldArray.includes(field.id)
             ? { ...field, isWinner: true }
             : field;
         })
@@ -198,27 +212,27 @@ const Board: React.FC<BoardProps> = () => {
       let redWinnerArray: string[] = [];
 
       arrayToCheck.map((field: BoardFieldStateType) => {
-        if (field.playerUsed === "white") {
+        if (field.playerUsed === "yellow") {
           whitePlayerScore++;
           whiteWinnerArray.push(field.id);
 
           if (whitePlayerScore >= 4) {
-            setWinner("white");
+            setWinner("yellow");
             setWinnerFieldId(whiteWinnerArray);
+            // setWinnerFieldId([]);
           }
-
           return;
         } else {
           whitePlayerScore = 0;
           whiteWinnerArray = [];
         }
       });
-      //   if (field.playerUsed === "white") {
+      //   if (field.playerUsed === "yellow") {
       //     whitePlayerScore++;
       //     whiteWinnerArray.push(field.id);
 
       //     if (whitePlayerScore >= 4) {
-      //       setWinner("white");
+      //       setWinner("yellow");
       //       setWinnerFieldId(whiteWinnerArray);
       //     }
 
@@ -237,12 +251,14 @@ const Board: React.FC<BoardProps> = () => {
         if (field.playerUsed === "red") {
           redPlayerScore++;
           redWinnerArray.push(field.id);
-
           if (redPlayerScore >= 4) {
             setWinner("red");
             setWinnerFieldId(redWinnerArray);
+            // setGameStates((prev) => ({
+            //   ...prev,
+            //   winnerFieldArray: redWinnerArray,
+            // }));
           }
-
           return;
         } else {
           redPlayerScore = 0;
@@ -330,11 +346,15 @@ const Board: React.FC<BoardProps> = () => {
       }
     );
     const lastEmptyId = diagonalFieldArray[lastEmptyIndexColumn].id;
-    setboardState((item) =>
+    setBoardState((item) =>
       item.map((row) =>
         row.map((col: BoardFieldStateType) => {
           return col.id === lastEmptyId
-            ? { ...col, isClicked: true, playerUsed: currentPlayerTurn }
+            ? {
+                ...col,
+                isClicked: true,
+                playerUsed: gameStates.currentPlayerTurn,
+              }
             : col;
         })
       )
@@ -343,7 +363,11 @@ const Board: React.FC<BoardProps> = () => {
       item.map((row) =>
         row.map((col: BoardFieldStateType) => {
           return col.id === lastEmptyId
-            ? { ...col, isClicked: true, playerUsed: currentPlayerTurn }
+            ? {
+                ...col,
+                isClicked: true,
+                playerUsed: gameStates.currentPlayerTurn,
+              }
             : col;
         })
       )
@@ -394,7 +418,12 @@ const Board: React.FC<BoardProps> = () => {
   };
 
   return (
-    <div className="relative flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1">
+    <div className="relative mx-auto flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1">
+      <Image
+        src={currentImage.front}
+        alt="game board"
+        className="absolute z-[-4] "
+      />
       {/* <Image
         src={counterYellowSmall}
         className="w-[33.95px] h-[33.95px]"
@@ -419,19 +448,14 @@ const Board: React.FC<BoardProps> = () => {
           Test{currentColumnHover}, gracz {currentPlayerTurn} {markerDistance}
         </h1>
       </motion.div> */}
-      <div className="relative mx-auto flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1">
-        <Image
-          src={currentImage.front}
-          alt="game board"
-          className="absolute z-[-4] "
-        />
-        {/* <Image src={counterRedSmall} className="ml-10 z-[-5] " alt="" /> */}
-        {/* <Image
+
+      {/* <Image src={counterRedSmall} className="ml-10 z-[-5] " alt="" /> */}
+      {/* <Image
           src={currentImage.back}
           alt="game board"
           className="absolute z-[-6]"
         /> */}
-        {/* {windowWidth > 1023 && (
+      {/* {windowWidth > 1023 && (
           <Image
             style={dystans}
             src={markerRed}
@@ -440,16 +464,15 @@ const Board: React.FC<BoardProps> = () => {
           />
         )} */}
 
-        <div
-          className="z-[30] ml-1 grid grid-cols-[repeat(7,33.95px)] grid-rows-6  
-sm:grid-cols-[repeat(7,75px)] sm:w-[630px] sm:mt-5 sm:ml-9 sm:gap-[12.5px]"
-        >
-          {printBoard}
-        </div>
-        {/* <div className="mt-2 ml-2 w-[350px] sm:w-[632px] sm:ml-8 sm:mt-5 z-[500] ">
+      <div
+        className="z-[30] ml-2 mt-1 grid gap-x-[5.5px] grid-cols-[repeat(7,42px)] grid-rows-6  
+sm:grid-cols-[repeat(7,75px)] w-[336px] sm:w-[630px] sm:mt-5 sm:ml-9 sm:gap-[12.5px]"
+      >
+        {printBoard}
+      </div>
+      {/* <div className="mt-2 ml-2 w-[350px] sm:w-[632px] sm:ml-8 sm:mt-5 z-[500] ">
           {printBoard}
         </div> */}
-      </div>
       {/* <div className="flex mt-20">
         <span className="w-[75px] aspect-square block items-start bg-slate-500 rounded-full "></span>
         <Image src={counterRedBig} className="ml-10 z-[-5] " alt="" />
