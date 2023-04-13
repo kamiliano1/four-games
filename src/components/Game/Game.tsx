@@ -60,9 +60,21 @@ const Game: React.FC<GameProps> = () => {
       ></div> */}
       <div className="px-5 sm:px-0 py-14">
         <div className="w-[335px] sm:w-[632px] lg:w-[1110px] mx-auto ">
-          <h1 className="text-[5rem] text-center">
+          {/* <h1 className="text-[5rem] text-center">
             {gameStates.currentPlayerTurn}
-          </h1>
+          </h1> */}
+          {/* <button
+            onClick={() =>
+              setGameStates((prev) => ({
+                ...prev,
+                winnerPlayer: "Player 1",
+                isGameOver: true,
+              }))
+            }
+            className="bg-slate-500"
+          >
+            PLAYER 1
+          </button> */}
           <div className="flex items-center justify-between sm:w-[632px] sm:mx-auto">
             <MenuButton />
             <Image src={logo} alt="web logo" />

@@ -9,11 +9,11 @@ export interface GameState {
   redPlayerRemainingTime: number;
   yellowPlayerRemainingTime: number;
   isGameOver: boolean;
-  winnerPlayer: "none" | "red" | "yellow";
+  winnerPlayer: "none" | "Player 1" | "Player 2";
   winnerFieldArray: string[];
 }
 
-const defaultGameState: GameState = {
+export const defaultGameState: GameState = {
   isPaused: true,
   currentPlayerTurn: "red",
   playerStarted: "red",

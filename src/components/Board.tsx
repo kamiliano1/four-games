@@ -58,11 +58,21 @@ const Board: React.FC<BoardProps> = () => {
   const [yOdleglosc, setYOdleglosc] = useState(0);
 
   const [currentColumnHover, setCurrentColumnHover] = useState<number>(-1);
-  const swichtPlayerTurn = () => {
+  const switchPlayerTurn = () => {
     setGameStates((prev) =>
       prev.currentPlayerTurn === "red"
-        ? { ...prev, currentPlayerTurn: "yellow" }
-        : { ...prev, currentPlayerTurn: "red" }
+        ? {
+            ...prev,
+            currentPlayerTurn: "yellow",
+            yellowPlayerRemainingTime: 30,
+            redPlayerRemainingTime: 30,
+          }
+        : {
+            ...prev,
+            currentPlayerTurn: "red",
+            yellowPlayerRemainingTime: 30,
+            redPlayerRemainingTime: 30,
+          }
     );
     // console.log(gameStates, "tura");
 
@@ -128,43 +138,70 @@ const Board: React.FC<BoardProps> = () => {
     checkColumns();
     checkDiagonals();
   }, [boardState]);
-  const resetField = () => {
-    setBoardState((item) =>
-      item.map((row, rowId) =>
-        row.map((col: number, colId: number) => ({
-          id: nanoid(),
-          name: `Row ${rowId} Col ${colId}`,
-          row: rowId,
-          column: colId,
-          isClicked: false,
-          playerUsed: "none",
-        }))
-      )
-    );
-    setWinner("none");
-    setWinnerFieldId([]);
-    setGameStates((prev) => ({ ...prev, winnerFieldArray: [] }));
-  };
+  // const resetField = () => {
+  //   setBoardState((item) =>
+  //     item.map((row, rowId) =>
+  //       row.map((col: number, colId: number) => ({
+  //         id: nanoid(),
+  //         name: `Row ${rowId} Col ${colId}`,
+  //         row: rowId,
+  //         column: colId,
+  //         isClicked: false,
+  //         playerUsed: "none",
+  //       }))
+  //     )
+  //   );
+  //   setWinner("none");
+  //   setWinnerFieldId([]);
+  //   setGameStates((prev) => ({ ...prev, winnerFieldArray: [] }));
+  // };
 
   useEffect(() => {
-    console.log(winner);
+    console.log("zwyciestwo,");
+    console.log(winnerFieldId);
+
+    // console.log(winner);
+
+    // setBoardState((prev) =>
+    //   prev.map((item) =>
+    //     item.map((field: BoardFieldStateType) => {
+    //       return winnerFieldId.includes(field.id)
+    //         ? { ...field, isWinner: true }
+    //         : field;
+    //     })
+    //   )
+    // );
+    // setBoardState((prev) =>
+    //   prev.map((item) =>
+    //     item.map((field: BoardFieldStateType) => {
+    //       return gameStates.winnerFieldArray.includes(field.id)
+    //         ? { ...field, isWinner: true }
+    //         : field;
+    //     })
+    //   )
+    // );
+
+    //   setPreparedBoard((prev) =>
+    //     prev.map((item) =>
+    //       item.map((field: BoardFieldProps) => {
+    //         return winnerFieldId.includes(field.id)
+    //           ? { ...field, isWinner: true }
+    //           : field;
+    //       })
+    //     )
+    //   );
+    // }, [winner]);
 
     setBoardState((prev) =>
       prev.map((item) =>
         item.map((field: BoardFieldStateType) => {
-          return gameStates.winnerFieldArray.includes(field.id)
-            ? { ...field, isWinner: true }
-            : field;
-        })
-      )
-    );
-    setBoardState((prev) =>
-      prev.map((item) =>
-        item.map((field: BoardFieldStateType) => {
+          // console.log(field.id, "ide");
+
           // console.log(gameStates.winnerFieldArray.includes(field.id), "tak");
-          // console.log(winnerFieldId.includes(field.id), "tak");
+          // console.log(winnerFieldId, field.id, "tak");
+          // console.log(gameStates.winnerPlayer);
 
-          return gameStates.winnerFieldArray.includes(field.id)
+          return winnerFieldId.includes(field.id)
             ? { ...field, isWinner: true }
             : field;
         })
@@ -219,7 +256,15 @@ const Board: React.FC<BoardProps> = () => {
           if (whitePlayerScore >= 4) {
             setWinner("yellow");
             setWinnerFieldId(whiteWinnerArray);
+            console.log(winnerFieldId);
+
             // setWinnerFieldId([]);
+            setGameStates((prev) => ({
+              ...prev,
+              yellowPlayerScore: prev.yellowPlayerScore + 1,
+              isGameOver: true,
+              winnerPlayer: "Player 2",
+            }));
           }
           return;
         } else {
@@ -251,13 +296,20 @@ const Board: React.FC<BoardProps> = () => {
         if (field.playerUsed === "red") {
           redPlayerScore++;
           redWinnerArray.push(field.id);
+          // console.log(field.id, "ide");
+
           if (redPlayerScore >= 4) {
             setWinner("red");
             setWinnerFieldId(redWinnerArray);
-            // setGameStates((prev) => ({
-            //   ...prev,
-            //   winnerFieldArray: redWinnerArray,
-            // }));
+            // console.log(winnerFieldId, "red arraj");
+            setGameStates((prev) => ({
+              ...prev,
+              redPlayerScore: prev.redPlayerScore + 1,
+              isGameOver: true,
+              winnerPlayer: "Player 1",
+            }));
+
+            // setBoardState(prev=>)
           }
           return;
         } else {
@@ -331,7 +383,9 @@ const Board: React.FC<BoardProps> = () => {
     fieldCol: number,
     fieldRow: number
   ) => {
-    if (isClicked) return;
+    // console.log(gameStates.isGameOver, "isGameOver");
+
+    if (isClicked || gameStates.isGameOver) return;
 
     const diagonalFieldArray: BoardFieldStateType[] = [];
     boardState.filter((item) => {
@@ -385,11 +439,11 @@ const Board: React.FC<BoardProps> = () => {
     // console.log(fieldRow, fieldCol);
 
     // checkRows();
-    swichtPlayerTurn();
+    switchPlayerTurn();
   };
 
   const currentHoverColumn = (column: number) => {
-    console.log(column);
+    // console.log(column);
 
     setCurrentColumnHover(column);
   };

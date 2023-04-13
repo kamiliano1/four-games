@@ -25,6 +25,13 @@ const PlayerRedTurnBox: React.FC<PlayerRedTurnBoxProps> = () => {
     }, 100);
     if (gameStates.redPlayerRemainingTime <= 0 || gameStates.isPaused)
       clearTimeout(timer);
+    if (gameStates.redPlayerRemainingTime === 0)
+      setGameStates((prev) => ({
+        ...prev,
+        yellowPlayerScore: prev.yellowPlayerScore + 1,
+        isGameOver: true,
+        winnerPlayer: "Player 2",
+      }));
     return () => clearTimeout(timer);
   }, [gameStates.redPlayerRemainingTime, gameStates.isPaused, setGameStates]);
   return (

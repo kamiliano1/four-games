@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import { boardFieldState } from "../../atoms/boardAtom";
 import { gameState } from "../../atoms/gameAtom";
 import { nanoid } from "nanoid";
+// import { resetGame } from "@/src/components/utility/restartGame";
 type RestartButtonSmallProps = {};
 
 const RestartButtonSmall: React.FC<RestartButtonSmallProps> = () => {
@@ -30,6 +31,11 @@ const RestartButtonSmall: React.FC<RestartButtonSmallProps> = () => {
             currentPlayerTurn: "yellow",
             yellowPlayerRemainingTime: 30,
             redPlayerRemainingTime: 30,
+            isGameOver: false,
+            winnerPlayer: "none",
+            isPaused: false,
+            redPlayerScore: 0,
+            yellowPlayerScore: 0,
           }
         : {
             ...prev,
@@ -37,12 +43,18 @@ const RestartButtonSmall: React.FC<RestartButtonSmallProps> = () => {
             currentPlayerTurn: "red",
             yellowPlayerRemainingTime: 30,
             redPlayerRemainingTime: 30,
+            isGameOver: false,
+            winnerPlayer: "none",
+            isPaused: false,
+            redPlayerScore: 0,
+            yellowPlayerScore: 0,
           }
     );
   };
   return (
     <button
       onClick={reset}
+      // onClick={() => resetGame(setBoardState, setGameStates)}
       className="uppercase py-[.625rem] w-[108px] bg-darkPurple hover:bg-red text-500 text-white font-bold rounded-[20px]"
     >
       Restart
