@@ -104,17 +104,10 @@ const SingleField: React.FC<SingleFieldProps> = ({
   // };
 
   return (
-    <>
+    <div className="inline relative">
       {isClicked ? (
-        <div className="inline relative ">
-          <Image
-            className={`${windowWidth < 700 && ""} `}
-            src={images}
-            // style={styles}
-            alt=""
-            // onClick={() => console.log(column)}
-            // onClick={() => field(id, isClicked, column)}
-          />
+        <div className="inline relative z-[30]">
+          <Image src={images} alt="" />
           {isWinner && (
             <span className="absolute top-[10px] left-[11.5px] flex border-[6px] border-white rounded-full aspect-square items-start w-[20px] sm:w-[34px] sm:left-[18px] sm:top-[16px] "></span>
           )}
@@ -129,14 +122,6 @@ const SingleField: React.FC<SingleFieldProps> = ({
               onMouseLeave={() => currentHoverColumn(-1)}
             ></span>
           ) : (
-            // <Image
-            //   className=""
-            //   src={images}
-            //   // style={styles}
-            //   alt=""
-            //   // onClick={() => console.log(column)}
-            //   // onClick={() => field(id, isClicked, column)}
-            // />
             <span
               className="cursor-pointer w-[33.95px] aspect-square inline-block rounded-full "
               onClick={() => field(id, isClicked, column)}
@@ -144,28 +129,10 @@ const SingleField: React.FC<SingleFieldProps> = ({
               onMouseLeave={() => currentHoverColumn(-1)}
             ></span>
           )}
-          {/*  */}
-
-          {/* <Image
-            className="cursor-pointer inline opacity-20 mr-[6.14px] sm:mr-[18px] sm:mb-[12px]"
-            src={images}
-            // style={styles}
-            alt=""
-            // onMouseEnter={() => console.log(column)}
-            onClick={() => field(id, isClicked, column)}
-            onMouseEnter={() => currentHoverColumn(column)}
-            onMouseLeave={() => currentHoverColumn(-1)}
-            // onMouseEnter={() => setCurrentColumnHover(column)}
-            // onMouseLeave={() => setCurrentColumnHover(-1)}
-          /> */}
         </>
       )}
-      {/* <button
-        // style={styles}
-        onClick={() => field(id, isClicked, column)}
-        className="p-5  bg-yellow">{`R ${row + 1} C ${column + 1}`}</button> */}
-      {/* {column === 6 && <br />} */}
-    </>
+      <div></div>
+    </div>
   );
 };
 export default SingleField;
