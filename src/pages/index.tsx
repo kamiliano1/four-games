@@ -40,6 +40,7 @@ export default function Home() {
         ) : (
           <Game />
         )}
+
         {/* <Game /> */}
         {/* <Board /> */}
         {/* <StartModal /> */}

@@ -225,7 +225,7 @@ const Board: React.FC<BoardProps> = () => {
     checkDiagonals();
   }, [boardState]);
   useEffect(() => {
-    setMarkerDistance(51 + currentColumnHover * 89);
+    setMarkerDistance(35 + currentColumnHover * 88.06);
   }, [currentColumnHover]);
   useEffect(() => {
     const checkWinner = (
@@ -805,7 +805,7 @@ const Board: React.FC<BoardProps> = () => {
       },
     ],
   ];
-  const printBoard = druk.map((row, rowId) =>
+  const printBoards = druk.map((row, rowId) =>
     row.map((col: BoardFieldStateType, colId: number) => {
       return (
         <SingleField
@@ -824,7 +824,7 @@ const Board: React.FC<BoardProps> = () => {
       );
     })
   );
-  const printBoards = boardState.map((row, rowId) =>
+  const printBoard = boardState.map((row, rowId) =>
     row.map((col: BoardFieldStateType, colId: number) => {
       return (
         <SingleField
@@ -852,10 +852,10 @@ const Board: React.FC<BoardProps> = () => {
       <Image
         src={currentImage.front}
         alt="game board"
-        className="absolute z-[4]"
+        className="absolute z-[-4]"
       />
 
-      {windowWidth > 1023 && !gameStates.isGameOver && (
+      {windowWidth > 1023 && !gameStates.isGameOver && markerDistance > 0 && (
         <Image
           style={dystans}
           src={
@@ -867,9 +867,9 @@ const Board: React.FC<BoardProps> = () => {
       )}
 
       <div
-        className="z-[] mt-1 grid gap-x-[5.5px] grid-cols-[repeat(7,42px)] grid-rows-[repeat(6,64px)]  
-sm:grid-cols-[repeat(7,64px)] w-[336px] sm:w-[632px] sm:ml-[37.5px] sm:mt-4 sm:gap-[24.5px]"
-      >
+        onMouseLeave={() => setCurrentColumnHover(-1)}
+        className="mt-1 grid pl-[7px] gap gap-y-[6px] grid-rows-[repeat(6,41px)] grid-cols-[repeat(7,47px)] sm:grid-rows-[repeat(6,64px)]  
+sm:grid-cols-[repeat(7,68.56px)] w-[336px] sm:w-[632px] sm:pl-[18.5px] sm:mt-4 sm:gap-x-[19.5px] sm:gap-y-[24px]">
         {printBoard}
       </div>
     </div>

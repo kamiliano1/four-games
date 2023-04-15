@@ -118,15 +118,15 @@ const SingleField: React.FC<SingleFieldProps> = ({
             <span
               className="cursor-pointer w-[75px] aspect-square inline-block rounded-full "
               onClick={() => field(id, isClicked, column)}
+              // onMouseEnter={() => currentHoverColumn(column)}
               onMouseEnter={() => currentHoverColumn(column)}
-              onMouseLeave={() => currentHoverColumn(-1)}
-            ></span>
+              onMouseLeave={() => currentHoverColumn(-1000)}></span>
           ) : (
             <span
               className="cursor-pointer w-[33.95px] aspect-square inline-block rounded-full "
               onClick={() => field(id, isClicked, column)}
-              onMouseEnter={() => currentHoverColumn(column)}
-              onMouseLeave={() => currentHoverColumn(-1)}
+              // onMouseEnter={() => currentHoverColumn(column)}
+              // onMouseLeave={() => currentHoverColumn(-1)}
             ></span>
           )}
         </>
