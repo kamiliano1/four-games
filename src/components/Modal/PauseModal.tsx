@@ -4,9 +4,7 @@ import RestartButtonBig from "@/src/Layout/Buttons/RestartButtonBig";
 
 import React from "react";
 
-type PauseModalProps = {};
-
-const PauseModal: React.FC<PauseModalProps> = () => {
+const PauseModal: React.FC = () => {
   return (
     <div className="menu flex justify-center fixed w-full h-full z-[9999]">
       <div

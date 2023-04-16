@@ -1,15 +1,10 @@
 import Image from "next/image";
-import PlayerScore from "./PlayerScore";
-import frontBoardLayer from "../../../public/images/board-layer-white-small.svg";
-import backBoardLayer from "../../../public/images/board-layer-black-small.svg";
-import turnBackgroundRed from "../../../public/images/turn-background-red.svg";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
 import turnBackgroundYellow from "../../../public/images/turn-background-yellow.svg";
 import { gameState } from "../../atoms/gameAtom";
-import { useRecoilState } from "recoil";
-import { useEffect } from "react";
-type PlayerYellowTurnBoxProps = {};
 
-const PlayerYellowTurnBox: React.FC<PlayerYellowTurnBoxProps> = () => {
+const PlayerYellowTurnBox: React.FC = () => {
   const [gameStates, setGameStates] = useRecoilState(gameState);
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -17,13 +12,12 @@ const PlayerYellowTurnBox: React.FC<PlayerYellowTurnBoxProps> = () => {
         ...prev,
         yellowPlayerRemainingTime: prev.yellowPlayerRemainingTime - 1,
       }));
-    }, 100);
+    }, 1000);
     if (gameStates.yellowPlayerRemainingTime <= 0 || gameStates.isPaused)
       clearTimeout(timer);
     if (gameStates.yellowPlayerRemainingTime === 0)
       setGameStates((prev) => ({
         ...prev,
-        // redPlayerScore: prev.redPlayerScore + 1,
         isGameOver: true,
         winnerPlayer: "Player 1",
       }));

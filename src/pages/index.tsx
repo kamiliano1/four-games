@@ -6,9 +6,9 @@ import PauseModal from "../components/Modal/PauseModal";
 import { authModalState } from "../atoms/modalAtom";
 import { useRecoilState } from "recoil";
 import Game from "../components/Game/Game";
+
 export default function Home() {
   const [modalState, setModalState] = useRecoilState(authModalState);
-  console.log(modalState, "state");
 
   return (
     <>

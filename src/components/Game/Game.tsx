@@ -15,43 +15,11 @@ import PlayerYellowTurnBox from "./PlayerYellowTurnBox";
 import WinnerBox from "./WinnerBox";
 import Board from "../Board";
 import { gameState } from "../../atoms/gameAtom";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 
-type GameProps = {};
+const Game: React.FC = () => {
+  const gameStates = useRecoilValue(gameState);
 
-const Game: React.FC<GameProps> = () => {
-  type picturesType = {
-    front: StaticImageData;
-    back: StaticImageData;
-  };
-  const [gameStates, setGameStates] = useRecoilState(gameState);
-  const [windowWidth, setWindowWidth] = useState<number>(0);
-  const [currentImage, setCurrentImage] = useState<picturesType>({
-    front: frontBoardLayerSmall,
-    back: backBoardLayerSmall,
-  });
-  useEffect(() => {
-    function handleWindowResize() {
-      setWindowWidth(window.innerWidth);
-    }
-    setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleWindowResize);
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    windowWidth > 767
-      ? setCurrentImage({
-          front: frontBoardLayerLarge,
-          back: backBoardLayerLarge,
-        })
-      : setCurrentImage({
-          front: frontBoardLayerSmall,
-          back: backBoardLayerSmall,
-        });
-  }, [windowWidth]);
   return (
     <div className=" grid justify-center pt-[50px] relative h-[100vh] pb-10">
       <div
@@ -61,8 +29,8 @@ const Game: React.FC<GameProps> = () => {
             : gameStates.winnerPlayer === "Player 2"
             ? "bg-yellow"
             : "bg-darkPurple"
-        } absolute w-full h-[30%] bottom-0  lg:-bottom-[0]
-      rounded-t-[60px] rounder-r-[60px] -z-40`}
+        } absolute w-full h-[30%] bottom-0 lg:-bottom-[0]
+      rounded-t-[60px] rounder-r-[60px] z-[-50]`}
       ></div>
       <div className="px-5 sm:px-0 py-15  ">
         <div className="">
@@ -85,20 +53,7 @@ const Game: React.FC<GameProps> = () => {
               playerId={2}
               score={gameStates.yellowPlayerScore}
             />
-
-            {/* <div className="relative flex justify-center col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-1"> */}
             <Board />
-            {/* <Image
-              src={currentImage.front}
-              alt="game board"
-              className=" z-[-4]"
-            />
-            <Image
-              src={currentImage.back}
-              alt="game board"
-              className="absolute z-[-5]"
-            /> */}
-            {/* </div> */}
           </div>
         </div>
         {gameStates.isGameOver ? (
@@ -112,8 +67,6 @@ const Game: React.FC<GameProps> = () => {
             )}
           </>
         )}
-
-        {/* <WinnerBox winnerName={gameStates.winnerPlayer} /> */}
       </div>
     </div>
   );

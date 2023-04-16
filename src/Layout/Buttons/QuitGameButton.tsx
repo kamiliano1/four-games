@@ -3,8 +3,8 @@ import { authModalState } from "../../atoms/modalAtom";
 import { useRecoilState } from "recoil";
 import { gameState } from "@/src/atoms/gameAtom";
 import { defaultGameState } from "@/src/atoms/gameAtom";
-type QuitGameButtonProps = {};
-const QuitGameButton: React.FC<QuitGameButtonProps> = () => {
+
+const QuitGameButton: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
   const [gameStates, setGameStates] = useRecoilState(gameState);
   const quitGame = () => {

@@ -1,15 +1,10 @@
 import GameRulesButton from "@/src/Layout/Buttons/GameRulesButton";
-import PlayVsCPUButton from "@/src/Layout/Buttons/PlayVsCPUButton";
 import PlayVsPlayer from "@/src/Layout/Buttons/PlayVsPlayerButton";
 import Image from "next/image";
 import React from "react";
-import { useRecoilState } from "recoil";
 import logo from "../../../public/images/logo.svg";
-import { authModalState } from "../../atoms/modalAtom";
-type StartModalProps = {};
 
-const StartModal: React.FC<StartModalProps> = () => {
-  const [modalState, setModalState] = useRecoilState(authModalState);
+const StartModal: React.FC = () => {
   return (
     <div className="bg-purple w-full sm:bg-darkPurple h-[100vh] sm:flex">
       <div

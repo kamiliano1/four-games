@@ -1,9 +1,8 @@
 import Image from "next/image";
 import React from "react";
 import playerVsCPU from "../../../public/images/player-vs-cpu.svg";
-type PlayVsCPUButtonProps = {};
 
-const PlayVsCPUButton: React.FC<PlayVsCPUButtonProps> = () => {
+const PlayVsCPUButton: React.FC = () => {
   return (
     <button
       className={` text-700 mb-7 

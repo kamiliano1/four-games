@@ -1,10 +1,9 @@
 import React from "react";
-
-type MenuButtonProps = {};
 import { authModalState } from "../../atoms/modalAtom";
 import { useRecoilState } from "recoil";
+
 import { gameState } from "../../atoms/gameAtom";
-const MenuButton: React.FC<MenuButtonProps> = () => {
+const MenuButton: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
   const [gameStates, setGameStates] = useRecoilState(gameState);
   const openMenuModal = () => {

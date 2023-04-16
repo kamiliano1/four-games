@@ -4,9 +4,8 @@ import playerVsPlayer from "../../../public/images/player-vs-player.svg";
 import { authModalState } from "../../atoms/modalAtom";
 import { useRecoilState } from "recoil";
 import { gameState } from "../../atoms/gameAtom";
-type PlayVsPlayerButtonProps = {};
 
-const PlayVsPlayerButton: React.FC<PlayVsPlayerButtonProps> = () => {
+const PlayVsPlayerButton: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
 
   const [gameStates, setGameStates] = useRecoilState(gameState);

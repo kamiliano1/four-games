@@ -1,8 +1,7 @@
 import AcceptButton from "@/src/Layout/Buttons/AcceptButton";
 import React from "react";
-type RulesModalProps = {};
 
-const RulesModal: React.FC<RulesModalProps> = () => {
+const RulesModal: React.FC = () => {
   return (
     <div className="bg-purple w-full  h-[100vh] flex justify-center">
       <div

@@ -2,9 +2,8 @@ import React from "react";
 import { authModalState } from "../../atoms/modalAtom";
 import { useRecoilState } from "recoil";
 import { gameState } from "@/src/atoms/gameAtom";
-type ContinueGameButtonProps = {};
 
-const ContinueGameButton: React.FC<ContinueGameButtonProps> = () => {
+const ContinueGameButton: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
   const [gameStates, setGameStates] = useRecoilState(gameState);
   const continueGame = () => {

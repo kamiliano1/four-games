@@ -3,10 +3,9 @@ import { gameState } from "@/src/atoms/gameAtom";
 import React from "react";
 import { useRecoilState } from "recoil";
 import { nanoid } from "nanoid";
-
-type PlayAgainButtonProps = {};
-
-const PlayAgainButton: React.FC<PlayAgainButtonProps> = () => {
+import useReset from "../../hooks/useReset";
+const PlayAgainButton: React.FC = () => {
+  const { resetGame } = useReset();
   const [boardState, setBoardState] = useRecoilState(boardFieldState);
   const [gameStates, setGameStates] = useRecoilState(gameState);
   const reset = () => {
@@ -23,29 +22,30 @@ const PlayAgainButton: React.FC<PlayAgainButtonProps> = () => {
         }))
       )
     );
-    setGameStates((prev) =>
-      prev.playerStarted === "red"
-        ? {
-            ...prev,
-            playerStarted: "yellow",
-            currentPlayerTurn: "yellow",
-            yellowPlayerRemainingTime: 30,
-            redPlayerRemainingTime: 30,
-            isGameOver: false,
-            winnerPlayer: "none",
-            isPaused: false,
-          }
-        : {
-            ...prev,
-            playerStarted: "red",
-            currentPlayerTurn: "red",
-            yellowPlayerRemainingTime: 30,
-            redPlayerRemainingTime: 30,
-            isGameOver: false,
-            winnerPlayer: "none",
-            isPaused: false,
-          }
-    );
+    resetGame();
+    // setGameStates((prev) =>
+    //   prev.playerStarted === "red"
+    //     ? {
+    //         ...prev,
+    //         playerStarted: "yellow",
+    //         currentPlayerTurn: "yellow",
+    //         yellowPlayerRemainingTime: 30,
+    //         redPlayerRemainingTime: 30,
+    //         isGameOver: false,
+    //         winnerPlayer: "none",
+    //         isPaused: false,
+    //       }
+    //     : {
+    //         ...prev,
+    //         playerStarted: "red",
+    //         currentPlayerTurn: "red",
+    //         yellowPlayerRemainingTime: 30,
+    //         redPlayerRemainingTime: 30,
+    //         isGameOver: false,
+    //         winnerPlayer: "none",
+    //         isPaused: false,
+    //       }
+    // );
   };
   return (
     <button
