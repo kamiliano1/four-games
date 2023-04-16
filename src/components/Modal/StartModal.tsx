@@ -17,7 +17,7 @@ const StartModal: React.FC<StartModalProps> = () => {
        m-auto sm:shadow-normalBig sm:w-[480px] sm:rounded-[40px] sm:h-auto sm:border-[3px] sm:border-black"
       >
         <Image src={logo} alt="web logo" className="mx-auto mb-20" />
-        <PlayVsCPUButton />
+        {/* <PlayVsCPUButton /> */}
         <PlayVsPlayer />
         {/* <PlayVersus type="vsPlayer" /> */}
         {/* <PlayVersus type="vsCPU" /> */}

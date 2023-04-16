@@ -73,7 +73,7 @@ const SingleField: React.FC<SingleFieldProps> = ({
     } else if (playerUsed === "yellow") {
       setImages(currentImage.smallYellow);
     }
-    if (windowWidth > 737) {
+    if (windowWidth > 767) {
       if (playerUsed === "red") {
         setImages(currentImage.bigRed);
         fieldBackground = "red";
@@ -120,7 +120,8 @@ const SingleField: React.FC<SingleFieldProps> = ({
               onClick={() => field(id, isClicked, column)}
               // onMouseEnter={() => currentHoverColumn(column)}
               onMouseEnter={() => currentHoverColumn(column)}
-              onMouseLeave={() => currentHoverColumn(-1000)}></span>
+              onMouseLeave={() => currentHoverColumn(-1000)}
+            ></span>
           ) : (
             <span
               className="cursor-pointer w-[33.95px] aspect-square inline-block rounded-full "

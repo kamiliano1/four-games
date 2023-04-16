@@ -17,15 +17,20 @@ const PlayerYellowTurnBox: React.FC<PlayerYellowTurnBoxProps> = () => {
         ...prev,
         yellowPlayerRemainingTime: prev.yellowPlayerRemainingTime - 1,
       }));
-      // setCurrentTime((prev) => prev - 1);
-      // setIsTimeRunning(true);
     }, 100);
     if (gameStates.yellowPlayerRemainingTime <= 0 || gameStates.isPaused)
       clearTimeout(timer);
+    if (gameStates.yellowPlayerRemainingTime === 0)
+      setGameStates((prev) => ({
+        ...prev,
+        // redPlayerScore: prev.redPlayerScore + 1,
+        isGameOver: true,
+        winnerPlayer: "Player 1",
+      }));
     return () => clearTimeout(timer);
   }, [
-    gameStates.yellowPlayerRemainingTime,
     gameStates.isPaused,
+    gameStates.yellowPlayerRemainingTime,
     setGameStates,
   ]);
   return (

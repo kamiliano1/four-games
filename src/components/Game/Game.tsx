@@ -53,7 +53,7 @@ const Game: React.FC<GameProps> = () => {
         });
   }, [windowWidth]);
   return (
-    <div className=" ">
+    <div className=" grid justify-center pt-[50px] relative h-[100vh] pb-10">
       <div
         className={`${
           gameStates.winnerPlayer === "Player 1"
@@ -61,34 +61,20 @@ const Game: React.FC<GameProps> = () => {
             : gameStates.winnerPlayer === "Player 2"
             ? "bg-yellow"
             : "bg-darkPurple"
-        } absolute w-full h-[30%] bottom-0 
-      rounded-t-[60px] rounder-r-[60px] -z-40`}></div>
-      <div className="px-5 sm:px-0 py-14">
-        <div className="w-[335px] sm:w-[632px] lg:w-[1110px] mx-auto ">
-          {/* <h1 className="text-[5rem] text-center">
-            {gameStates.currentPlayerTurn}
-          </h1> */}
-          {/* <button
-            onClick={() =>
-              setGameStates((prev) => ({
-                ...prev,
-                winnerPlayer: "Player 1",
-                isGameOver: true,
-              }))
-            }
-            className="bg-slate-500"
-          >
-            PLAYER 1
-          </button> */}
+        } absolute w-full h-[30%] bottom-0  lg:-bottom-[0]
+      rounded-t-[60px] rounder-r-[60px] -z-40`}
+      ></div>
+      <div className="px-5 sm:px-0 py-15  ">
+        <div className="">
           <div className="flex items-center justify-between sm:w-[632px] sm:mx-auto">
             <MenuButton />
             <Image src={logo} alt="web logo" />
             <RestartButton />
           </div>
-          {/* <Board /> */}
           <div
             className="grid grid-rows-[150px, auto] justify-center grid-cols-2 lg:grid-rows-[584px] 
-          lg:grid-cols-[141px,632px,141px] lg:gap-x-10 place-items-center">
+          lg:grid-cols-[141px,632px,141px] lg:gap-x-10 place-items-center lg:pt-5"
+          >
             <PlayerScore
               name="Player 1"
               playerId={1}

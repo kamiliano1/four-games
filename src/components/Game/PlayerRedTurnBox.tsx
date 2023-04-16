@@ -12,23 +12,19 @@ type PlayerRedTurnBoxProps = {};
 
 const PlayerRedTurnBox: React.FC<PlayerRedTurnBoxProps> = () => {
   const [gameStates, setGameStates] = useRecoilState(gameState);
-  // const [currentTime, setCurrentTime] = useState<number>(30);
-  // const [isTimeRunning, setIsTimeRunning] = useState<boolean>(false);
   useEffect(() => {
     const timer = setTimeout(() => {
       setGameStates((prev) => ({
         ...prev,
         redPlayerRemainingTime: prev.redPlayerRemainingTime - 1,
       }));
-      // setCurrentTime((prev) => prev - 1);
-      // setIsTimeRunning(true);
     }, 100);
     if (gameStates.redPlayerRemainingTime <= 0 || gameStates.isPaused)
       clearTimeout(timer);
     if (gameStates.redPlayerRemainingTime === 0)
       setGameStates((prev) => ({
         ...prev,
-        yellowPlayerScore: prev.yellowPlayerScore + 1,
+        // yellowPlayerScore: prev.yellowPlayerScore + 1,
         isGameOver: true,
         winnerPlayer: "Player 2",
       }));

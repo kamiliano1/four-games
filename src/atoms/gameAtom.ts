@@ -9,7 +9,7 @@ export interface GameState {
   redPlayerRemainingTime: number;
   yellowPlayerRemainingTime: number;
   isGameOver: boolean;
-  winnerPlayer: "none" | "Player 1" | "Player 2";
+  winnerPlayer: "none" | "Player 1" | "Player 2" | "Tie";
   winnerFieldArray: string[];
 }
 
