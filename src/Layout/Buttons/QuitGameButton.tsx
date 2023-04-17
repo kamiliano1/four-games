@@ -1,15 +1,13 @@
 import React from "react";
 import { authModalState } from "../../atoms/modalAtom";
 import { useRecoilState } from "recoil";
-import { gameState } from "@/src/atoms/gameAtom";
-import { defaultGameState } from "@/src/atoms/gameAtom";
-
+import useReset from "@/src/hooks/useReset";
 const QuitGameButton: React.FC = () => {
+  const { resetGame } = useReset("start over");
   const [modalState, setModalState] = useRecoilState(authModalState);
-  const [gameStates, setGameStates] = useRecoilState(gameState);
   const quitGame = () => {
     setModalState((prev) => ({ ...prev, open: true, view: "start" }));
-    setGameStates(defaultGameState);
+    resetGame();
   };
   return (
     <button

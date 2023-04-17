@@ -15,8 +15,8 @@ const Game: React.FC = () => {
   const gameStates = useRecoilValue(gameState);
 
   return (
-    <div className="grid justify-centerr pt-[50px] relative h-[100vh] kolumnyyy">
-      <div className="px-5 sm:px-0 py-15">
+    <div className="grid pt-[50px] relative h-[100vh] grid-rows-[min-content,_auto]">
+      <div className="px-5 sm:px-0 py-15 justify-self-center">
         <div className="">
           <div className="flex items-center justify-between sm:w-[632px] sm:mx-auto">
             <MenuButton />

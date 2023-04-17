@@ -1,7 +1,7 @@
 import React from "react";
 import useReset from "../../hooks/useReset";
 const RestartButtonSmall: React.FC = () => {
-  const { resetGame } = useReset();
+  const { resetGame } = useReset("start over");
 
   return (
     <button

@@ -24,7 +24,22 @@ export default function Home() {
         />
       </Head>
       <main className="">
-        <Game />
+        {modalState.open && (
+          <>
+            {modalState.view === "start" && <StartModal />}
+            {modalState.view === "pause" && <PauseModal />}
+            {modalState.view === "rules" && <RulesModal />}
+          </>
+        )}
+        {/* {modalState.view !== "start" ||
+          (modalState.view !== "rules" && <Game />)} */}
+
+        {modalState.open &&
+        (modalState.view === "start" || modalState.view === "rules") ? (
+          ""
+        ) : (
+          <Game />
+        )}
         {/* <Game /> */}
         {/* <Board /> */}
         {/* <StartModal /> */}

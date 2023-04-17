@@ -1,14 +1,12 @@
 import React from "react";
 import { boardFieldState } from "../../atoms/boardAtom";
-import { gameState } from "../../atoms/gameAtom";
 import { useRecoilState } from "recoil";
 import { nanoid } from "nanoid";
 import { authModalState } from "@/src/atoms/modalAtom";
 import useReset from "../../hooks/useReset";
 const RestartButtonBig: React.FC = () => {
-  const { resetGame } = useReset();
+  const { resetGame } = useReset("continue");
   const [boardState, setBoardState] = useRecoilState(boardFieldState);
-  const [gameStates, setGameStates] = useRecoilState(gameState);
   const [modalState, setModalState] = useRecoilState(authModalState);
   const reset = () => {
     resetGame();
@@ -25,33 +23,6 @@ const RestartButtonBig: React.FC = () => {
         }))
       )
     );
-    // setGameStates((prev) =>
-    //   prev.playerStarted === "red"
-    //     ? {
-    //         ...prev,
-    //         playerStarted: "yellow",
-    //         currentPlayerTurn: "yellow",
-    //         yellowPlayerRemainingTime: 30,
-    //         redPlayerRemainingTime: 30,
-    //         isGameOver: false,
-    //         winnerPlayer: "none",
-    //         isPaused: false,
-    //         redPlayerScore: 0,
-    //         yellowPlayerScore: 0,
-    //       }
-    //     : {
-    //         ...prev,
-    //         playerStarted: "red",
-    //         currentPlayerTurn: "red",
-    //         yellowPlayerRemainingTime: 30,
-    //         redPlayerRemainingTime: 30,
-    //         isGameOver: false,
-    //         winnerPlayer: "none",
-    //         isPaused: false,
-    //         redPlayerScore: 0,
-    //         yellowPlayerScore: 0,
-    //       }
-    // );
     setModalState((prev) => ({ ...prev, open: false }));
   };
   return (
@@ -62,7 +33,7 @@ const RestartButtonBig: React.FC = () => {
       bg-white text-black border-[3px]
        border-black hover:border-darkPurple shadow-normalBig hover:shadow-hoverBig`}
     >
-      Restarttttttttttttt
+      Restart
     </button>
   );
 };

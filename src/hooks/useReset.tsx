@@ -2,8 +2,10 @@ import { useRecoilState } from "recoil";
 import { boardFieldState } from "../atoms/boardAtom";
 import { gameState } from "../atoms/gameAtom";
 import { nanoid } from "nanoid";
+import { defaultGameState } from "../atoms/gameAtom";
 
-const useReset = () => {
+type ResetTypes = "continue" | "start over";
+const useReset = (resetType: ResetTypes) => {
   const [boardState, setBoardState] = useRecoilState(boardFieldState);
   const [gameStates, setGameStates] = useRecoilState(gameState);
 
@@ -12,7 +14,6 @@ const useReset = () => {
       item.map((row, rowId) =>
         row.map((col: number, colId: number) => ({
           id: nanoid(),
-          name: `Row ${rowId} Col ${colId}`,
           row: rowId,
           column: colId,
           isClicked: false,
@@ -21,34 +22,39 @@ const useReset = () => {
         }))
       )
     );
-    setGameStates((prev) =>
-      prev.playerStarted === "red"
-        ? {
-            ...prev,
-            playerStarted: "yellow",
-            currentPlayerTurn: "yellow",
-            yellowPlayerRemainingTime: 30,
-            redPlayerRemainingTime: 30,
-            isGameOver: false,
-            winnerPlayer: "none",
-            isPaused: false,
-            redPlayerScore: 0,
-            yellowPlayerScore: 0,
-          }
-        : {
-            ...prev,
-            playerStarted: "red",
-            currentPlayerTurn: "red",
-            yellowPlayerRemainingTime: 30,
-            redPlayerRemainingTime: 30,
-            isGameOver: false,
-            winnerPlayer: "none",
-            isPaused: false,
-            redPlayerScore: 0,
-            yellowPlayerScore: 0,
-          }
-    );
+    if (resetType === "start over") {
+      setGameStates({ ...defaultGameState, isPaused: false });
+    } else {
+      setGameStates((prev) =>
+        prev.playerStarted === "red"
+          ? {
+              ...prev,
+              isPaused: false,
+              currentPlayerTurn: "yellow",
+              playerStarted: "yellow",
+              // redPlayerScore: 0,
+              // yellowPlayerScore: 0,
+              redPlayerRemainingTime: 30,
+              yellowPlayerRemainingTime: 30,
+              isGameOver: false,
+              winnerPlayer: "none",
+            }
+          : {
+              ...prev,
+              isPaused: false,
+              currentPlayerTurn: "red",
+              playerStarted: "red",
+              // redPlayerScore: 0,
+              // yellowPlayerScore: 0,
+              redPlayerRemainingTime: 30,
+              yellowPlayerRemainingTime: 30,
+              isGameOver: false,
+              winnerPlayer: "none",
+            }
+      );
+    }
   };
+
   return { resetGame };
 };
 export default useReset;

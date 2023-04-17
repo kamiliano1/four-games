@@ -14,8 +14,6 @@ const StartModal: React.FC = () => {
         <Image src={logo} alt="web logo" className="mx-auto mb-20" />
         {/* <PlayVsCPUButton /> */}
         <PlayVsPlayer />
-        {/* <PlayVersus type="vsPlayer" /> */}
-        {/* <PlayVersus type="vsCPU" /> */}
         <GameRulesButton />
       </div>
     </div>

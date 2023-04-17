@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import { nanoid } from "nanoid";
 import useReset from "../../hooks/useReset";
 const PlayAgainButton: React.FC = () => {
-  const { resetGame } = useReset();
+  const { resetGame } = useReset("continue");
   const [boardState, setBoardState] = useRecoilState(boardFieldState);
   const [gameStates, setGameStates] = useRecoilState(gameState);
   const reset = () => {
