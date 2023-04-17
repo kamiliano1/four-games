@@ -27,7 +27,7 @@ p {
 
 @keyframes dropAnimation {
   0% {
-    transform: translateY(-500%);
+    transform: translateY(-700%);
   }
   100% {
     transform: translateY(0%);
@@ -35,5 +35,10 @@ p {
 }
 
 .drop-animation {
-  animation: dropAnimation 1000ms;
+  animation: dropAnimation 1500ms;
+  /* transform: translateY(-500%); */
+}
+
+.kolumnyyy {
+  grid-template-rows: min-content auto;
 }

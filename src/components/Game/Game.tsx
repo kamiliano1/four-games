@@ -1,38 +1,22 @@
-import React, { useEffect, useState } from "react";
-import logo from "../../../public/images/logo.svg";
+import React from "react";
+import { useRecoilValue } from "recoil";
+import { gameState } from "../../atoms/gameAtom";
+import Image from "next/image";
 import MenuButton from "@/src/Layout/Buttons/MenuButton";
 import RestartButton from "@/src/Layout/Buttons/RestartButtonSmall";
-import Image, { StaticImageData } from "next/image";
-import PlayerScore from "./PlayerScore";
-import frontBoardLayerSmall from "../../../public/images/board-layer-white-small.svg";
-import backBoardLayerSmall from "../../../public/images/board-layer-black-small.svg";
-import frontBoardLayerLarge from "../../../public/images/board-layer-white-large.svg";
-import backBoardLayerLarge from "../../../public/images/board-layer-black-large.svg";
-import turnBackgroundRed from "../../../public/images/turn-background-red.svg";
-import turnBackgroundYellow from "../../../public/images/turn-background-yellow.svg";
+import logo from "../../../public/images/logo.svg";
+import Board from "../Board";
 import PlayerRedTurnBox from "./PlayerRedTurnBox";
+import PlayerScore from "./PlayerScore";
 import PlayerYellowTurnBox from "./PlayerYellowTurnBox";
 import WinnerBox from "./WinnerBox";
-import Board from "../Board";
-import { gameState } from "../../atoms/gameAtom";
-import { useRecoilValue } from "recoil";
 
 const Game: React.FC = () => {
   const gameStates = useRecoilValue(gameState);
 
   return (
-    <div className=" grid justify-center pt-[50px] relative h-[100vh] pb-10">
-      <div
-        className={`${
-          gameStates.winnerPlayer === "Player 1"
-            ? "bg-red"
-            : gameStates.winnerPlayer === "Player 2"
-            ? "bg-yellow"
-            : "bg-darkPurple"
-        } absolute w-full h-[30%] bottom-0 lg:-bottom-[0]
-      rounded-t-[60px] rounder-r-[60px] z-[-50]`}
-      ></div>
-      <div className="px-5 sm:px-0 py-15  ">
+    <div className="grid justify-centerr pt-[50px] relative h-[100vh] kolumnyyy">
+      <div className="px-5 sm:px-0 py-15">
         <div className="">
           <div className="flex items-center justify-between sm:w-[632px] sm:mx-auto">
             <MenuButton />
@@ -68,6 +52,16 @@ const Game: React.FC = () => {
           </>
         )}
       </div>
+      <div
+        className={`${
+          gameStates.winnerPlayer === "Player 1"
+            ? "bg-red"
+            : gameStates.winnerPlayer === "Player 2"
+            ? "bg-yellow"
+            : "bg-darkPurple"
+        }  w-full  ${gameStates.isGameOver ? "-mt-[155px]" : "-mt-[106px]"}
+      rounded-t-[60px] rounder-r-[60px] z-[-50]`}
+      ></div>
     </div>
   );
 };
