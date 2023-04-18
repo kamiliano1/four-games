@@ -1,7 +1,7 @@
 import React from "react";
 import { BsCheck2 } from "react-icons/bs";
 import { useRecoilState } from "recoil";
-import { authModalState } from "../../atoms/modalAtom";
+import { authModalState } from "../../../atoms/modalAtom";
 
 const AcceptButton: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);

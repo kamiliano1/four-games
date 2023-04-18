@@ -1,11 +1,10 @@
 import Head from "next/head";
-import Board from "../components/Board";
-import StartModal from "../components/Modal/StartModal";
-import RulesModal from "../components/Modal/RulesModal";
-import PauseModal from "../components/Modal/PauseModal";
-import { authModalState } from "../atoms/modalAtom";
 import { useRecoilState } from "recoil";
+import { authModalState } from "../atoms/modalAtom";
 import Game from "../components/Game/Game";
+import PauseModal from "../components/Modal/PauseModal/PauseModal";
+import RulesModal from "../components/Modal/RulesModal/RulesModal";
+import StartModal from "../components/Modal/StartModal/StartModal";
 
 export default function Home() {
   const [modalState, setModalState] = useRecoilState(authModalState);
@@ -31,8 +30,6 @@ export default function Home() {
             {modalState.view === "rules" && <RulesModal />}
           </>
         )}
-        {/* {modalState.view !== "start" ||
-          (modalState.view !== "rules" && <Game />)} */}
 
         {modalState.open &&
         (modalState.view === "start" || modalState.view === "rules") ? (
@@ -40,12 +37,6 @@ export default function Home() {
         ) : (
           <Game />
         )}
-        {/* <Game /> */}
-        {/* <Board /> */}
-        {/* <StartModal /> */}
-        {/* <RulesModal /> */}
-
-        {/* <Board /> */}
       </main>
     </>
   );

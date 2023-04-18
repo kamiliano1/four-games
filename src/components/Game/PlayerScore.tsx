@@ -33,8 +33,8 @@ const PlayerScore: React.FC<PlayerScoreProps> = ({ name, score, playerId }) => {
         alt=""
         className={`absolute ${
           playerId === 1
-            ? "left-[-27px]  lg:left-[calc(50%-27px)] lg:right-0 lg:top-[-27px]"
-            : "right-[-27px]  lg:left-[calc(50%-27px)] lg:right-0 lg:top-[-27px]"
+            ? "left-[-27px] lg:left-[calc(50%-27px)] lg:right-0 lg:top-[-27px]"
+            : "right-[-27px] lg:left-[calc(50%-27px)] lg:right-0 lg:top-[-27px]"
         }`}
       />
     </div>

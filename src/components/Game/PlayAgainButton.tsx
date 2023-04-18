@@ -23,29 +23,6 @@ const PlayAgainButton: React.FC = () => {
       )
     );
     resetGame();
-    // setGameStates((prev) =>
-    //   prev.playerStarted === "red"
-    //     ? {
-    //         ...prev,
-    //         playerStarted: "yellow",
-    //         currentPlayerTurn: "yellow",
-    //         yellowPlayerRemainingTime: 30,
-    //         redPlayerRemainingTime: 30,
-    //         isGameOver: false,
-    //         winnerPlayer: "none",
-    //         isPaused: false,
-    //       }
-    //     : {
-    //         ...prev,
-    //         playerStarted: "red",
-    //         currentPlayerTurn: "red",
-    //         yellowPlayerRemainingTime: 30,
-    //         redPlayerRemainingTime: 30,
-    //         isGameOver: false,
-    //         winnerPlayer: "none",
-    //         isPaused: false,
-    //       }
-    // );
   };
   return (
     <button

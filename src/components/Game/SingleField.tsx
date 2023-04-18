@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from "react";
-import counterRedSmall from "../../public/images/counter-red-small.svg";
-import counterRedBig from "../../public/images/counter-red-large.svg";
-import counterYellowSmall from "../../public/images/counter-yellow-small.svg";
-import counterYellowBig from "../../public/images/counter-yellow-large.svg";
+import counterRedSmall from "../../../public/images/counter-red-small.svg";
+import counterRedBig from "../../../public/images/counter-red-large.svg";
+import counterYellowSmall from "../../../public/images/counter-yellow-small.svg";
+import counterYellowBig from "../../../public/images/counter-yellow-large.svg";
 import Image, { StaticImageData } from "next/image";
-import useWindowWith from "../hooks/useWindowWith";
-
-type BoardFieldProps = {
-  id: string;
-  name: string;
-  row: number;
-  column: number;
-  isClicked: boolean;
-  playerUsed: "none" | "red" | "yellow";
-  isWinner: boolean;
-};
+import useWindowWith from "../../hooks/useWindowWith";
+import { motion } from "framer-motion";
+import { BoardFieldStateType } from "../../atoms/boardAtom";
 
 type SingleFieldProps = {
   name: string;
@@ -25,7 +17,7 @@ type SingleFieldProps = {
   playerUsed: "none" | "red" | "yellow";
   isWinner: boolean;
   field: (id: string, isClicked: boolean, column: number) => void;
-  currentField: BoardFieldProps[];
+  currentField: BoardFieldStateType[];
   currentHoverColumn: (column: number) => void;
 };
 
@@ -50,17 +42,15 @@ const SingleField: React.FC<SingleFieldProps> = ({
   const windowWidth = useWindowWith();
   const [currentImage, setCurrentImage] = useState<picturesType>({
     bigRed: counterRedBig,
-
     smallRed: counterRedSmall,
-    bigYellow: counterYellowBig,
 
+    bigYellow: counterYellowBig,
     smallYellow: counterYellowSmall,
   });
 
   const [images, setImages] = useState<StaticImageData>(currentImage.bigRed);
 
   useEffect(() => {
-    let fieldBackground = "black";
     if (playerUsed === "red") {
       setImages(currentImage.smallRed);
     } else if (playerUsed === "yellow") {
@@ -69,10 +59,8 @@ const SingleField: React.FC<SingleFieldProps> = ({
     if (windowWidth > 767) {
       if (playerUsed === "red") {
         setImages(currentImage.bigRed);
-        fieldBackground = "red";
       } else if (playerUsed === "yellow") {
         setImages(currentImage.bigYellow);
-        fieldBackground = "blue";
       }
     }
   }, [
@@ -89,9 +77,19 @@ const SingleField: React.FC<SingleFieldProps> = ({
     <div className="inline relative">
       {isClicked ? (
         <div className="inline relative z-[-5]">
-          <Image src={images} alt="" className="drop-animation" />
+          <motion.div
+            initial={{ y: -500 }}
+            animate={{ y: 0 }}
+            transition={{ ease: "easeOut", duration: 0.7 }}
+          >
+            <Image src={images} alt="" />
+          </motion.div>
           {isWinner && (
-            <span className="absolute top-[12px] left-[11px]  flex border-[6px] border-white rounded-full aspect-square items-start w-[20px] sm:w-[34px] sm:left-[18px] sm:top-[16px] "></span>
+            <span
+              className="absolute top-[12px] left-[10.5px] 
+            flex border-[6px] border-white rounded-full aspect-square 
+            items-start w-[20px] sm:w-[34px] sm:left-[17px] sm:top-[17px] "
+            ></span>
           )}
         </div>
       ) : (
@@ -111,7 +109,6 @@ const SingleField: React.FC<SingleFieldProps> = ({
           )}
         </>
       )}
-      <div></div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
-import ContinueGameButton from "@/src/Layout/Buttons/ContinueGameButton";
-import QuitGameButton from "@/src/Layout/Buttons/QuitGameButton";
-import RestartButtonBig from "@/src/Layout/Buttons/RestartButtonBig";
+import ContinueGameButton from "@/src/components/Modal/PauseModal/ContinueGameButton";
+import QuitGameButton from "@/src/components/Modal/PauseModal/QuitGameButton";
+import RestartButtonBig from "@/src/components/Modal/PauseModal/RestartButtonBig";
 
 import React from "react";
 
@@ -17,9 +17,7 @@ const PauseModal: React.FC = () => {
           Pause
         </h1>
         <ContinueGameButton />
-        {/* <ContinueEndGame type="ContinueGame" /> */}
         <RestartButtonBig />
-        {/* <ContinueEndGame type="QuitGame" /> */}
         <QuitGameButton />
       </div>
     </div>

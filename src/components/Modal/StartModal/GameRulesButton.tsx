@@ -1,5 +1,5 @@
 import React from "react";
-import { authModalState } from "../../atoms/modalAtom";
+import { authModalState } from "../../../atoms/modalAtom";
 import { useRecoilState } from "recoil";
 
 const GameRulesButton: React.FC = () => {

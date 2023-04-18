@@ -1,5 +1,5 @@
 import React from "react";
-import { authModalState } from "../../atoms/modalAtom";
+import { authModalState } from "../../../atoms/modalAtom";
 import { useRecoilState } from "recoil";
 import useReset from "@/src/hooks/useReset";
 const QuitGameButton: React.FC = () => {

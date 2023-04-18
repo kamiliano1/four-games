@@ -16,20 +16,3 @@ p {
 .menu {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 }
-
-@keyframes dropAnimation {
-  0% {
-    transform: translateY(-700%);
-  }
-  100% {
-    transform: translateY(0%);
-  }
-}
-
-.drop-animation {
-  animation: dropAnimation 1000ms;
-}
-
-.kolumnyyy {
-  grid-template-rows: min-content auto;
-}

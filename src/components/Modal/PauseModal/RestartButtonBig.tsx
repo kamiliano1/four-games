@@ -1,9 +1,9 @@
 import React from "react";
-import { boardFieldState } from "../../atoms/boardAtom";
+import { boardFieldState } from "../../../atoms/boardAtom";
 import { useRecoilState } from "recoil";
 import { nanoid } from "nanoid";
 import { authModalState } from "@/src/atoms/modalAtom";
-import useReset from "../../hooks/useReset";
+import useReset from "../../../hooks/useReset";
 const RestartButtonBig: React.FC = () => {
   const { resetGame } = useReset("continue");
   const [boardState, setBoardState] = useRecoilState(boardFieldState);

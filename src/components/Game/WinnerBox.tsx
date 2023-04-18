@@ -1,4 +1,4 @@
-import PlayAgainButton from "@/src/Layout/Buttons/PlayAgainButton";
+import PlayAgainButton from "@/src/components/Game/PlayAgainButton";
 import React from "react";
 
 type WinnerBoxProps = { winnerName: "none" | "Player 1" | "Player 2" | "Tie" };

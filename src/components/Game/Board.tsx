@@ -3,17 +3,15 @@ import Image, { StaticImageData } from "next/image";
 import React, { CSSProperties, useEffect, useState } from "react";
 import SingleField from "./SingleField";
 import { useRecoilState } from "recoil";
-import backBoardLayerLarge from "../../public/images/board-layer-black-large.svg";
-import backBoardLayerSmall from "../../public/images/board-layer-black-small.svg";
-import frontBoardLayerLarge from "../../public/images/board-layer-white-large.svg";
-import frontBoardLayerSmall from "../../public/images/board-layer-white-small.svg";
-import markerRed from "../../public/images/marker-red.svg";
-import markerYellow from "../../public/images/marker-yellow.svg";
-import { BoardFieldStateType, boardFieldState } from "../atoms/boardAtom";
-import { gameState } from "../atoms/gameAtom";
-import useWindowWith from "../hooks/useWindowWith";
-
-type PlayerColor = "red" | "yellow" | "none";
+import backBoardLayerLarge from "../../../public/images/board-layer-black-large.svg";
+import backBoardLayerSmall from "../../../public/images/board-layer-black-small.svg";
+import frontBoardLayerLarge from "../../../public/images/board-layer-white-large.svg";
+import frontBoardLayerSmall from "../../../public/images/board-layer-white-small.svg";
+import markerRed from "../../../public/images/marker-red.svg";
+import markerYellow from "../../../public/images/marker-yellow.svg";
+import { BoardFieldStateType, boardFieldState } from "../../atoms/boardAtom";
+import { gameState } from "../../atoms/gameAtom";
+import useWindowWith from "../../hooks/useWindowWith";
 
 const Board: React.FC = () => {
   const [boardState, setBoardState] = useRecoilState(boardFieldState);
@@ -21,6 +19,7 @@ const Board: React.FC = () => {
   const [markerDistance, setMarkerDistance] = useState<number>(0);
   const [winnerFieldId, setWinnerFieldId] = useState<string[]>([]);
   const [currentColumnHover, setCurrentColumnHover] = useState<number>(-1);
+  const [isCheckingWinner, setIsCheckingWinner] = useState<boolean>(false);
   const switchPlayerTurn = () => {
     setGameStates((prev) =>
       prev.currentPlayerTurn === "red"
@@ -212,29 +211,27 @@ const Board: React.FC = () => {
         });
       });
     };
-
-    checkRows();
-    checkColumns();
-    checkDiagonals();
-  }, [boardState, gameStates.isGameOver, setGameStates]);
+    if (!isCheckingWinner) {
+      checkRows();
+      checkColumns();
+      checkDiagonals();
+    }
+  }, [boardState, gameStates.isGameOver, setGameStates, isCheckingWinner]);
 
   useEffect(() => {
     const setWinnerField = () => {
-      setTimeout(() => {
-        setBoardState((prev) =>
-          prev.map((item) =>
-            item.map((field: BoardFieldStateType) => {
-              return winnerFieldId.includes(field.id)
-                ? { ...field, isWinner: true }
-                : field;
-            })
-          )
-        );
-      }, 1000);
+      setBoardState((prev) =>
+        prev.map((item) =>
+          item.map((field: BoardFieldStateType) => {
+            return winnerFieldId.includes(field.id)
+              ? { ...field, isWinner: true }
+              : field;
+          })
+        )
+      );
     };
     setWinnerField();
   }, [gameStates.isPaused, setBoardState, winnerFieldId]);
-  useEffect(() => {}, []);
 
   const clickField = (
     id: string,
@@ -242,7 +239,11 @@ const Board: React.FC = () => {
     fieldCol: number,
     fieldRow: number
   ) => {
-    if (isClicked || gameStates.isGameOver) return;
+    if (isClicked || gameStates.isGameOver || isCheckingWinner) return;
+    setIsCheckingWinner(true);
+    setTimeout(() => {
+      setIsCheckingWinner(false);
+    }, 700);
 
     const diagonalFieldArray: BoardFieldStateType[] = [];
     boardState.filter((item) => {
@@ -257,19 +258,6 @@ const Board: React.FC = () => {
       }
     );
     const lastEmptyId = diagonalFieldArray[lastEmptyIndexColumn].id;
-    setBoardState((item) =>
-      item.map((row) =>
-        row.map((col: BoardFieldStateType) => {
-          return col.id === lastEmptyId
-            ? {
-                ...col,
-                isClicked: true,
-                playerUsed: gameStates.currentPlayerTurn,
-              }
-            : col;
-        })
-      )
-    );
     setBoardState((item) =>
       item.map((row) =>
         row.map((col: BoardFieldStateType) => {
@@ -332,7 +320,7 @@ const Board: React.FC = () => {
           src={
             gameStates.currentPlayerTurn === "red" ? markerRed : markerYellow
           }
-          className={`absolute top-[-31px]`}
+          className={`absolute top-[-38px]`}
           alt=" "
         />
       )}

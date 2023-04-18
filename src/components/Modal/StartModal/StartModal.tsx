@@ -1,8 +1,8 @@
-import GameRulesButton from "@/src/Layout/Buttons/GameRulesButton";
-import PlayVsPlayer from "@/src/Layout/Buttons/PlayVsPlayerButton";
+import GameRulesButton from "@/src/components/Modal/StartModal/GameRulesButton";
+import PlayVsPlayer from "@/src/components/Modal/StartModal/PlayVsPlayerButton";
 import Image from "next/image";
 import React from "react";
-import logo from "../../../public/images/logo.svg";
+import logo from "../../../../public/images/logo.svg";
 
 const StartModal: React.FC = () => {
   return (

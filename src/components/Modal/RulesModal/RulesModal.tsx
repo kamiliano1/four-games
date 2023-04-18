@@ -1,9 +1,9 @@
-import AcceptButton from "@/src/Layout/Buttons/AcceptButton";
+import AcceptButton from "@/src/components/Modal/RulesModal/AcceptButton";
 import React from "react";
 
 const RulesModal: React.FC = () => {
   return (
-    <div className="bg-purple w-full  h-[100vh] flex justify-center">
+    <div className="bg-purple w-full h-[100vh] flex justify-center">
       <div
         className="relative mx-5 bg-white flex flex-col justify-center  
         px-5 sm:px-10 pt-[1.875rem] pb-[3.8125rem] sm:pb-[3.1875rem] 

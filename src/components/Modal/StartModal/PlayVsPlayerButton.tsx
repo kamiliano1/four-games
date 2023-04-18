@@ -1,9 +1,10 @@
 import Image from "next/image";
 import React from "react";
-import playerVsPlayer from "../../../public/images/player-vs-player.svg";
-import { authModalState } from "../../atoms/modalAtom";
+import playerVsPlayer from "../../../../public/images/player-vs-player.svg";
+// import playerVsPlayer from "../../../../";
+import { authModalState } from "../../../atoms/modalAtom";
 import { useRecoilState } from "recoil";
-import { gameState } from "../../atoms/gameAtom";
+import { gameState } from "../../../atoms/gameAtom";
 
 const PlayVsPlayerButton: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
