@@ -23,7 +23,7 @@ export default function Home() {
         />
       </Head>
       <main className="">
-        <h1 className="hidden">Connect Four game</h1>
+        <h1 className="">Connect Four game</h1>
         {modalState.open && (
           <>
             {modalState.view === "start" && <StartModal />}
