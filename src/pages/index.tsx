@@ -23,6 +23,7 @@ export default function Home() {
         />
       </Head>
       <main className="">
+        <h1></h1>
         {modalState.open && (
           <>
             {modalState.view === "start" && <StartModal />}
