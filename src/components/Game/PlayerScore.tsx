@@ -16,7 +16,7 @@ const PlayerScore: React.FC<PlayerScoreProps> = ({ name, score, playerId }) => {
       className="relative flex flex-col lg:p-0 lg:justify-center sm:px-[2.5rem]
       w-[145px] sm:w-[270px] lg:w-[141px] 
       sm:justify-between 
-      sm:py-3 lg:py-[45.34px] sm:flex-row lg:flex-col sm:items-center my-12 sm:my-8
+      sm:py-3 lg:py-9 sm:flex-row lg:flex-col sm:items-center my-12 sm:my-8
     py-[.625rem] border-[3px] border-black text-center bg-white rounded-[20px] 
     font-bold shadow-normalBig"
     >

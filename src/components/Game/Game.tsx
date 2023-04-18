@@ -25,7 +25,7 @@ const Game: React.FC = () => {
           </div>
           <div
             className="grid grid-rows-[150px, auto] justify-center grid-cols-2 lg:grid-rows-[584px] 
-          lg:grid-cols-[141px,632px,141px] lg:gap-x-10 place-items-center lg:pt-5"
+          lg:grid-cols-[141px,632px,141px] lg:gap-x-10 place-items-center lg:pt-[18px]"
           >
             <PlayerScore
               name="Player 1"
