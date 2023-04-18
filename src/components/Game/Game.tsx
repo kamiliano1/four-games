@@ -20,7 +20,7 @@ const Game: React.FC = () => {
         <div className="">
           <div className="flex items-center justify-between sm:w-[632px] sm:mx-auto">
             <MenuButton />
-            <Image src={logo} alt="web logo" />
+            <Image src={logo} alt="web logo" className="ml-[20px]" />
             <RestartButton />
           </div>
           <div
